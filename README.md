@@ -8,7 +8,7 @@
 ### 문제 정의
 실제로 MS의 개발자의 업무 절반은 코드리뷰이다.
 Chat-GPT로 코드 리뷰 시간을 줄이고 더 좋은 코드를 작성할 수 있지 않을까?
-#### ![ms](/mss.png)
+#### ![ms](/image/mss.png)
 (https://www.samsungsds.com/kr/insights/global_code_review.html)
 ### 개요
 개발자들이 코드의 설명과 개선점을 Chat-GPT로 제공받을 수 있는 웹 애플리케이션이다.  사용자가 코드를 입력하고, 필요한 기능을 선택하면 개별적 프롬프트를 통해 Chat-GPT 기반 피드백을 얻을 수 있는 인터페이스를 제공한다.
@@ -33,7 +33,7 @@ Chat-GPT로 코드 리뷰 시간을 줄이고 더 좋은 코드를 작성할 수
 2. 제출된 내용을 바탕으로 문제를 분석하고 해결 방안을 제시하며, 필요한 경우 변경된 코드 제시
 
 # Project schedule
-#### ![schedule](/plan.png)
+#### ![schedule](/image/chart.png)
 
 # Team roles & development areas
 #### 박정수 
@@ -41,17 +41,17 @@ Chat-GPT로 코드 리뷰 시간을 줄이고 더 좋은 코드를 작성할 수
 #### 서유상
 - Front(react) 결과 출력  
 #### 이태웅
-- 디자인(Figma)
+- 디자인(Figma), CSS
 #### 서민지
-- gpt api 프롬프트, api 관리
+- Gpt api 프롬프트, api 관리
 #### 백엔드(node) : JSON으로 대체
 
 # List of technologies  
 #### 
-- front
-- html 
-- css
-- javascript
-- react
-- axios
-*추후 변경 가능*
+- HTML 
+- CSS
+- JavaScript
+- React
+- Axios
+
+    **추후 변경 가능**
