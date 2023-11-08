@@ -7,6 +7,7 @@
 # Abstract
 ### 문제 정의
 실제로 MS의 개발자의 업무 절반은 코드리뷰이다.
+
 Chat-GPT로 코드 리뷰 시간을 줄이고 더 좋은 코드를 작성할 수 있지 않을까?
 #### ![ms](/image/mss.png)
 (https://www.samsungsds.com/kr/insights/global_code_review.html)
