@@ -42,8 +42,7 @@ Chat-GPT로 코드 리뷰 시간을 줄이고 더 좋은 코드를 작성할 수
 #### 이태웅
 - 디자인(Figma), CSS
 #### 서민지
-- Gpt api 프롬프트, api 관리
-#### 백엔드(node) : JSON으로 대체
+- Chat-GPT api 프롬프트, api request
 
 # List of technologies  
 #### 
