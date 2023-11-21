@@ -1,11 +1,12 @@
-import {Route, Routes } from 'react-router-dom';
-import mainPage from './mainPage';
+import CodeSpace from "./components/CodeSpace";
+import MenuContainer from "./components/MenuContainer";
+import { useState } from "react";
+
 function App() {
+
+  const [curMenu, setCurMenu] = useState("code-inspection");
+
   return (
-    <div>
-      <Routes>
-        <Route path="/" Component={mainPage}/>
-      </Routes>
     </div>
   );
 }
