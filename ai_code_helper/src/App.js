@@ -1,9 +1,10 @@
+import CodeSpace from './components/CodeSpace';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-      </header>
+      <CodeSpace></CodeSpace>
     </div>
   );
 }
