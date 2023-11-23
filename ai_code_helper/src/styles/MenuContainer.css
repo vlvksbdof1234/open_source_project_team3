@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     width: 500px; /* 가로를 꽉 채움 */
-    height: 500px;
-    max-height: 500px;
+    max-height: 700px;
+    height:600px;
     background-color: rgb(177, 204, 204);
 }
