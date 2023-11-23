@@ -1,8 +1,14 @@
 .MenuDiv {
     width: 100%; /* 각 MenuDiv가 가로를 꽉 채움 */
     transition: all 0.3s ease; /* 부드러운 전환 효과 */
-    flex-grow: 0;
-    overflow: visible; /* 스크롤바 없음 */
+    flex-grow: 1;
+    overflow: hidden;
+    border: 1px black solid;
+    min-height: 40px;
+}
+
+.MenuDiv.MenuDiv.active{
+    flex-grow: 2;
 }
 
 .MenuDiv > label {
@@ -11,18 +17,20 @@
     text-align: center; /* 라벨 텍스트를 중앙 정렬 */
     background-color: green;
     padding: 10px 0; /* 라벨의 높이를 설정 */
+    overflow: visible;
 }
 
 .content-container {
-    width: 100%; /* 내용 컨테이너가 가로를 꽉 채움 */
-    max-height: 100%; /* 최대 높이 설정 */
-    overflow: auto; /* 내용이 넘치면 스크롤 표시 */
+    width: 100%; 
+    box-sizing: border-box;
 }
 
 .content {
     background-color: blueviolet; /* 배경색 설정 */
+    padding: 10px;
 }
 
-.MenuDiv.active {
-    flex-grow: 1;
+.MenuDiv.active .content-container{
+    max-height:calc(100% - 35px);
+    overflow: auto;
 }
