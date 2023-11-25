@@ -10,6 +10,9 @@ function App() {
   // 각 Div에서 받은 정보들을 가공, display
 
   return (
+    <div className="App">
+      <CodeSpace></CodeSpace>
+      <MenuContainer curMenu={curMenu} setCurMenu={setCurMenu}/>
     </div>
   );
 }
