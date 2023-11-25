@@ -2,8 +2,12 @@ import React, { useState, useEffect } from "react";
 import Editor from "./Editor";
 import "./../styles/CodeSpace.css";
 
+
+
 function CodeSpace() {
 
+    const [curMenu, setCurMenu] = useState("code-inspection");
+    
     const [value, updateValue] = useState("");
     const [jsvalue, updatejsValue] = useState("");
     const [cssvalue, updatecssValue] = useState("");
@@ -42,18 +46,6 @@ function CodeSpace() {
         <div>
         <div className="navbar">
           <i
-            title="save"
-            className={`material-icons ${dark ? "colorWhite" : ""}`}
-            onClick={() => {
-              download(
-                "download.txt",
-                selected == "JS" ? jsvalue : selected == "CSS" ? cssvalue : value
-              );
-            }}
-          >
-            save
-          </i>
-          <i
             title={dark ? "go light" : "go dark"}
             className={`material-icons ${dark ? "colorWhite" : ""}`}
             // onClick={() => {
@@ -61,22 +53,8 @@ function CodeSpace() {
             //   updateDark(!dark);
             // }}
           >
-            invert_colors
+            AI code helper
           </i>
-          <div
-            className={`run ${dark ? "darkRun" : ""}`}
-            onClick={() => {
-              updatePreview(value);
-              try {
-                eval(jsvalue);
-              } catch (e) {
-                alert("Please verify your JS");
-              }
-              addStyle(cssvalue);
-            }}
-          >
-            Run
-          </div>
         </div>
         <div className="playground">
           <select
@@ -92,8 +70,21 @@ function CodeSpace() {
           </select>
           <div className={`editor mr-0 ${dark ? "colorDark" : ""}`}>
           </div>
-          <div className={`editor ${dark && !preview ? "colorDark" : ""}`}>
-            {/* <div dangerouslySetInnerHTML={{ __html: preview }} /> */}
+        </div>
+        <div className="footer">
+          <div
+            className={`run ${dark ? "darkRun" : ""}`}
+            onClick={() => {
+              updatePreview(value);
+              try {
+                eval(jsvalue);
+              } catch (e) {
+                alert("Please verify your JS");
+              }
+              addStyle(cssvalue);
+            }}
+          >
+            Run
           </div>
         </div>
       </div>
