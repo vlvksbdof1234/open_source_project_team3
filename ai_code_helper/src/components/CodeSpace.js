@@ -69,6 +69,16 @@ function CodeSpace() {
             <option value="JS">JS</option>
           </select>
           <div className={`editor mr-0 ${dark ? "colorDark" : ""}`}>
+          {selected == "HTML" && (
+            <Editor
+              mode="html"
+              dark={dark}
+              onChange={(e) => {
+                updateValue(e);
+              }}
+              value={value}
+            />
+          )}
           </div>
         </div>
         <div className="footer">
