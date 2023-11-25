@@ -10,9 +10,7 @@ export const FlowChartDiv = () => {
     B-->D;
     C-->D;
   `;
-
   
-
   useEffect(() => {
     // Mermaid 초기화
     mermaid.initialize({ startOnLoad: true });

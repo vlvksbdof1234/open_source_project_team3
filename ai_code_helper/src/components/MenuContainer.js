@@ -5,6 +5,7 @@ import PseudoCodeDiv  from './PseudoCodeDiv';
 import FlowChartDiv from './FlowChartDiv'
 
 function MenuContainer({ curMenu, setCurMenu }) {
+
   return (
     <div className="MenuContainer">
       <MenuDiv

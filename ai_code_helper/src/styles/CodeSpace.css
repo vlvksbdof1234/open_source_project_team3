@@ -1,93 +1,81 @@
 body {
     margin: 0px;
     background: lightgray;
-    height: 100vh;
     user-select: none;
-  }
-  .colorWhite {
-      color: whitesmoke !important;
-  }
-  .colorDark {
-      background: #9f9f9f !important;
-  }
-  .navbar {
-    height: 44px;
-    padding: 4px 12px;
-  }
-  .editor {
+}
+
+
+.codeSpace {
+    width: 60%;
+    height: 100%;
+}
+
+.colorWhite {
+    color: whitesmoke !important;
+}
+
+.colorDark {
+    background: #9f9f9f !important;
+}
+
+.editor {
     padding: 8px;
     background: white;
     border-radius: 4px;
     margin: 0 12px;
-    height: calc(100vh - 80px);
-  }
-  .material-icons {
-      color: grey;
-      font-size: 32px;
-      margin: 6px 4px;
-      cursor: pointer;
-  }
-  .run {
-      display: inline-block;
-      background-color: #04AA6D;
-      color: white;
-      position: absolute;
-      width: 40px;
-      padding: 8px;
-      font-size: 20px;
-      font-family: sans-serif;
-      margin: 2px 0 0 4px;
-      border-radius: 2px;
-      cursor: pointer;
-  }
-  .run:hover {
-      color: darkslategray;
-      background: #04aa6d42;
-  }
-  .darkRun:hover {
-      font-weight: 500;
-      color: whitesmoke;
-  }
-  .dropdown {
-      position: absolute;
-      right: 50%;
-      top: -22px;
-      outline: none;
-      border: none;
-      padding: 4px 8px 6px;
-      border-radius: 4px;
-      margin-right: 20px;
-  }
-  .darkDD {
-      background: #9f9f9f !important;
-      color: whitesmoke;
-      font-weight: bold;
-  }
-  .playground{
-      position: relative;
-  }
-  @media screen and (min-width: 800px) {
-    .editor {
-      width: 50%;
-    }
-    .playground {
-        display: flex;
-    }
-    .mr-0 {
-        margin-right: 0px !important;
-    }
-  }
-  
-  @media screen and (max-width: 799px) {
-    .editor {
-        height: 50%;
-        margin-bottom: 10px;
-    }
-    .playground {
-      height: calc(100vh - 110px);
-    }
-    .dropdown {
-        right: 0%;
-    }
-  }
-  
+    height: calc(70vh);
+    width: 93%;
+}
+
+.material-icons {
+    color: grey;
+    font-size: 32px;
+    margin: 6px 4px;
+    cursor: pointer;
+}
+
+.run {
+    display: inline-block;
+    background-color: #04AA6D;
+    color: white;
+    position: absolute;
+    width: 40px;
+    padding: 8px;
+    font-size: 20px;
+    font-family: sans-serif;
+    margin: 2px 0 0 12px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.run:hover {
+    color: darkslategray;
+    background: #04aa6d42;
+}
+
+.darkRun:hover {
+    font-weight: 500;
+    color: whitesmoke;
+}
+
+.dropdown {
+    position: absolute;
+    right: 5%;
+    top: -22px;
+    outline: none;
+    border: none;
+    padding: 4px 8px 6px;
+    border-radius: 4px;
+    margin-right: 20px;
+}
+
+.darkDD {
+    background: #9f9f9f !important;
+    color: whitesmoke;
+    font-weight: bold;
+}
+
+.playground {
+    position: relative;
+    width: 100%;
+}
