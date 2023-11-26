@@ -7,7 +7,10 @@ body {
 
 .codeSpace {
     width: 60%;
-    height: 100%;
+    height: 90%;
+    margin: 0px 15px;
+    border-radius: 4px;
+    background-color: black;
 }
 
 .colorWhite {
@@ -19,12 +22,12 @@ body {
 }
 
 .editor {
-    padding: 8px;
+    /* padding: 8px; */
     background: white;
     border-radius: 4px;
-    margin: 0 12px;
-    height: calc(70vh);
-    width: 93%;
+    /* margin: 0 12px; */
+    height:calc(100%);
+    width: 100%;
 }
 
 .material-icons {
@@ -34,18 +37,24 @@ body {
     cursor: pointer;
 }
 
+
 .run {
     display: inline-block;
     background-color: #04AA6D;
     color: white;
-    position: absolute;
+    position: relative;
     width: 40px;
     padding: 8px;
     font-size: 20px;
     font-family: sans-serif;
-    margin: 2px 0 0 12px;
     border-radius: 2px;
     cursor: pointer;
+}
+
+.footer {
+    padding: 15px;
+    height:40px;
+    background-color: rgb(145, 157, 149);
 }
 
 .run:hover {
@@ -78,4 +87,6 @@ body {
 .playground {
     position: relative;
     width: 100%;
+    height:100%;
 }
+
