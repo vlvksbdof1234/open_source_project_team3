@@ -1,0 +1,92 @@
+body {
+    margin: 0px;
+    background: lightgray;
+    user-select: none;
+}
+
+
+.codeSpace {
+    width: 60%;
+    height: 90%;
+    margin: 0px 15px;
+    border-radius: 4px;
+    background-color: black;
+}
+
+.colorWhite {
+    color: whitesmoke !important;
+}
+
+.colorDark {
+    background: #979797 !important;
+}
+
+.editor {
+    /* padding: 8px; */
+    background: white;
+    border-radius: 4px;
+    /* margin: 0 12px; */
+    height:calc(100%);
+    width: 100%;
+}
+
+.material-icons {
+    color: grey;
+    font-size: 32px;
+    margin: 6px 4px;
+    cursor: pointer;
+}
+
+
+.run {
+    display: inline-block;
+    background-color: #04AA6D;
+    color: white;
+    position: relative;
+    width: 40px;
+    padding: 8px;
+    font-size: 20px;
+    font-family: sans-serif;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.footer {
+    padding: 15px;
+    height:40px;
+    background-color: rgb(145, 157, 149);
+}
+
+.run:hover {
+    color: darkslategray;
+    background: #04aa6d42;
+}
+
+.darkRun:hover {
+    font-weight: 500;
+    color: whitesmoke;
+}
+
+.dropdown {
+    position: absolute;
+    right: 5%;
+    top: -22px;
+    outline: none;
+    border: none;
+    padding: 4px 8px 6px;
+    border-radius: 4px;
+    margin-right: 20px;
+}
+
+.darkDD {
+    background: #9f9f9f !important;
+    color: whitesmoke;
+    font-weight: bold;
+}
+
+.playground {
+    position: relative;
+    width: 100%;
+    height:100%;
+}
+

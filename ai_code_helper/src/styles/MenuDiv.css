@@ -1,7 +1,7 @@
 .MenuDiv {
     width: 100%; /* 각 MenuDiv가 가로를 꽉 채움 */
     transition: all 0.3s ease; /* 부드러운 전환 효과 */
-    flex-grow: 1;
+    flex-grow: 0;
     overflow: hidden;
     border: 1px black solid;
     min-height: 40px;
@@ -15,9 +15,9 @@
     display: block; /* 라벨이 블록 레벨 요소로 표시됨 */
     width: 100%; /* 라벨이 가로를 꽉 채움 */
     text-align: center; /* 라벨 텍스트를 중앙 정렬 */
-    background-color: green;
     padding: 10px 0; /* 라벨의 높이를 설정 */
     overflow: visible;
+    background-color: beige;
 }
 
 .content-container {
@@ -26,8 +26,7 @@
 }
 
 .content {
-    background-color: blueviolet; /* 배경색 설정 */
-    padding: 10px;
+    padding: 20px;
 }
 
 .MenuDiv.active .content-container{
