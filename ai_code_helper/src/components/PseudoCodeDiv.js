@@ -1,9 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-export const PseudoCodeDiv = () => {
+export const PseudoCodeDiv = ({ pseudoCode }) => {
   return (
-    <div>PseudoCodeDiv</div>
-  )
-}
+    <div className="pseudo-code-div">
+      <pre>{pseudoCode}</pre>
+    </div>
+  );
+};
 
 export default PseudoCodeDiv;

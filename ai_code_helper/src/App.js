@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar/>
+      <Navbar />
       <div className="body">
         <CodeSpace className="topComponent"></CodeSpace>
         <MenuContainer
