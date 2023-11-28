@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import mermaid from "mermaid";
+import "../styles/FlowChartDiv.css"
 
 export const FlowChartDiv = () => {
   // Store Mermaid code
@@ -10,9 +11,7 @@ export const FlowChartDiv = () => {
     B-->D;
     C-->D;
   `;
-
   
-
   useEffect(() => {
     // Mermaid 초기화
     mermaid.initialize({ startOnLoad: true });

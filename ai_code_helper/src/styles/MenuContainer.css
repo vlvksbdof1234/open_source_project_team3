@@ -1,7 +1,7 @@
 .MenuContainer {
     display: flex;
     flex-direction: column;
-    width: 500px; /* 가로를 꽉 채움 */
-    max-height: 700px;
-    height:600px;
+    width: 50%; /* 가로를 꽉 채움 */
+    height:75vh;
+    background-color: white;
 }
