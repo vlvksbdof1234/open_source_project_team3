@@ -321,5 +321,10 @@
 319. }//class  
 "
 
+함수별로 텍스트로 된 pseudo code를 아래 출력 형식에 맞춰서 생성부탁해
 
-위 코드에 대해서 최대한 상세하게 많은 줄에 주석을 달아줄래?
+Class className:
+    Attributes:
+        type variableName:
+    Methods:
+    Events:
