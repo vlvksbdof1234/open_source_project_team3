@@ -66,8 +66,7 @@ Generate
     - [(Commit Link)](https://github.com/vlvksbdof1234/open_source_project_team3/pull/25/commits/5518f7e8591a02638e0ff1afd57de824dd6b40a5)
 ### 서민지
 - ChatGPT API 프롬프트
-       - [(Commit Link)]
-          (https://github.com/vlvksbdof1234/open_source_project_team3/pull/29)
+     - [(Commit Link)](https://github.com/vlvksbdof1234/open_source_project_team3/pull/29)
 - API request 
 - 플로우 차트 생성 후 출력 
 ### 이태웅
