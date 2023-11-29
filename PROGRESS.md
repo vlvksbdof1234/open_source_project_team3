@@ -68,7 +68,7 @@ Overall operation
     - [(Commit Link)](https://github.com/vlvksbdof1234/open_source_project_team3/pull/25/commits/5518f7e8591a02638e0ff1afd57de824dd6b40a5)
 ### 서민지
 - ChatGPT API 프롬프트
-     - [(Commit Link)](https://github.com/vlvksbdof1234/open_source_project_team3/pull/29)
+     - [(Commit Link)](https://github.com/vlvksbdof1234/open_source_project_team3/pull/29/commits/b3258fd1ce5ceb95ed3f8386f0b63a03d7ffe485)
 - API request 
 ### 이태웅
 - .md 파일 제작
