@@ -68,7 +68,6 @@ Generate
 - ChatGPT API 프롬프트
      - [(Commit Link)](https://github.com/vlvksbdof1234/open_source_project_team3/pull/29)
 - API request 
-- 플로우 차트 생성 후 출력 
 ### 이태웅
 - .md 파일 제작
     - [(Commit Link)](https://github.com/vlvksbdof1234/open_source_project_team3/commit/c56b9da184b21c6dc0668eef8683f0c4d36d9ef6)
