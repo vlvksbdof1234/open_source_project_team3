@@ -29,19 +29,15 @@
 ### ![project-schedule](/image/project-schedule.jpg)
 ## Project Screenshot
 ### ![AIcodehelper](/image/AI_code_helper.jpg)
-전체 스크린 샷
-- 코드 입력 공간 
+전체 스크린샷    
 ### ![code-inspection](/image/code-inspection.jpg)
-code-inspection
-- 코드 분석 결과 
+코드 분석    
 ### ![flowchart](/image/flowchart.jpg)
-flowchart
-- Flowchart 출력 결과 
+Flowchart    
 ### ![pseudo-code](/image/pseudo-code.jpg)
-pseudo-code
-- Pseudo-code 출력 결과
+Pseudo-Code
 ### ![motion](/image/motion.gif)
-Generate
+Overall operation 
 ## Individual Progress Status
 ### 박정수
 - 기초 UI 레이아웃 제작
