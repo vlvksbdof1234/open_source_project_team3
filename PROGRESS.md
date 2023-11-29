@@ -7,8 +7,8 @@
 3. 디자인 구상
 4. 프로젝트 진행 및 일정관리 
 ### git branch policy
-- Issue number로 branch naming
-     - 간결하게 issue에서 생성되는 issue number을 branch 이름으로 지정하여 사용하는 것으로 생각했으며, git-flow 방식이 일반적으로 많이 쓰지만 프로젝트의 규모를 생각했을 때, 현재의 방식이 가장 적합하다고 판단되었습니다.
+- Issue title로 branch naming
+     - issue title 이 가독성이 좋기에, git에서 제공하는 방식 채택
 
 - Branch protection
     - main(default) branch의 완전성을 유지하기 위해, main에 merge를 하기 위해서는 pull request를 통한 팀원의 승인이 필요하도록 설정하였습니다.
