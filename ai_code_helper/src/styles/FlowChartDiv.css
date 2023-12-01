@@ -1,19 +1,23 @@
 .mermaid-container {
     position: relative;
+    display: flex;
+    flex-direction: row;
     background-color: bisque;
     height: 500px;
-    width: 350px;
+    width: 100%;
 }
 
 .mermaid {
     height: 100%;
     width: 100%;
+    background-color: aqua;
     display: flex;
     /* Flex 컨테이너 설정 */
     justify-content: center;
     /* 가로 방향 중앙 정렬 */
     align-items: center;
     /* 세로 방향 중앙 정렬 */
+    cursor: pointer;
 }
 
 .expand-button {
@@ -52,10 +56,11 @@
   }
   
   .mermaid-editor {
-    margin-right: 20px;
+    padding: 20px;
+
   }
   
   .mermaid-editor textarea {
     width: 300px; /* 에디터 너비 조정 */
-    height: 200px; /* 에디터 높이 조정 */
+    height: 400px; /* 에디터 높이 조정 */
   }
