@@ -11,8 +11,10 @@ export const FlowChartDiv = () => {
     B-->D;
     C-->D;
   `;
+
   const [mermaidCode, setMermaidCode] = useState(initialMermaidCode);
-  const [renderedMermaidCode, setRenderedMermaidCode] = useState(initialMermaidCode);
+  const [renderedMermaidCode, setRenderedMermaidCode] =
+    useState(initialMermaidCode);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [tempDetailLevel, setTempDetailLevel] = useState("basic");
@@ -48,7 +50,6 @@ export const FlowChartDiv = () => {
   const resetChanges = () => {
     setMermaidCode(initialMermaidCode);
     setRenderedMermaidCode(initialMermaidCode);
-  
   };
 
   const toggleSettings = () => {
@@ -77,8 +78,14 @@ export const FlowChartDiv = () => {
   return (
     <div>
       <h1>FlowChart</h1>
-      <input placeholder="Type Function or Logic" />
-      <button>Generate</button>
+      <div className="generate-container">
+        <input
+          placeholder="Type Function or Logic"
+          className="diagram-config-input"
+        />
+        <button>Generate</button>
+      </div>
+
       <div className="mermaid-container">
         <div
           className={`mermaid ${isModalOpen ? "modal" : ""}`}
@@ -92,11 +99,7 @@ export const FlowChartDiv = () => {
             View & Edit Code
           </button>
           <button className="settingButton" onClick={toggleSettings}>
-            <img
-              className="settingImg"
-              alt="settingLogo.png"
-              src={logo}
-            />
+            <img className="settingImg" alt="settingLogo.png" src={logo} />
           </button>
         </div>
 
@@ -157,7 +160,7 @@ export const FlowChartDiv = () => {
             />
             <div className="edit-button-container">
               <button onClick={applyChanges}>적용</button>
-              <button onClick={resetChanges}>취소</button>
+              <button onClick={resetChanges}>초기화</button>
             </div>
           </div>
         )}

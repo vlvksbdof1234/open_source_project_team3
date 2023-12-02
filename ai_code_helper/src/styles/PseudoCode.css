@@ -1,0 +1,9 @@
+textarea {
+    width: 500px;
+    /* 에디터 너비 조정 */
+    height: 350px;
+    /* 에디터 높이 조정 */
+    border: none;
+    overflow: scroll;
+    resize: none;
+}

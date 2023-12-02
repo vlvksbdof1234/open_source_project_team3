@@ -4,8 +4,9 @@
   flex-direction: column;
   align-items: flex-start;
   background-color: bisque;
-  height: 1000px;
+  min-height: 600px;
   width: 100%;
+  padding:30px;
 }
 
 .mermaid {
@@ -26,6 +27,23 @@
   right: 10px;
   bottom: 10px;
   /* 기타 버튼 스타일 */
+}
+
+.generate-container {
+  padding:10px;
+  align-items: center;
+  display:flex;
+}
+
+.generate-container input{
+  height: 30px;
+  font-size: 1.5rem;
+  margin-right: 10px;
+}
+
+.generate-container button{
+  height: 35px;
+  font-size: 1.5rem;
 }
 
 .modal {
@@ -64,7 +82,7 @@
 }
 
 .mermaid-editor textarea {
-  width: 300px;
+  width: 500px;
   /* 에디터 너비 조정 */
   height: 350px;
   /* 에디터 높이 조정 */
