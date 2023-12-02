@@ -53,7 +53,7 @@ function CodeSpace() {
           <option value="CSS">CSS</option>
           <option value="JS">JS</option>
         </select>
-        <div className={`editor mr-0 ${dark ? "colorDark" : ""}`}>
+        <div className={`editor mr-0 `}>
           <Editor></Editor>
         </div>
       </div>
