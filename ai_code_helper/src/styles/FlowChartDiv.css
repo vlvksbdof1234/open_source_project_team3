@@ -1,113 +1,155 @@
 .mermaid-container {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    background-color: bisque;
-    height: 500px;
-    width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: bisque;
+  height: 1000px;
+  width: 100%;
 }
 
 .mermaid {
-    height: 100%;
-    width: 100%;
-    background-color: aqua;
-    display: flex;
-    /* Flex 컨테이너 설정 */
-    justify-content: center;
-    /* 가로 방향 중앙 정렬 */
-    align-items: center;
-    /* 세로 방향 중앙 정렬 */
-    cursor: pointer;
+  height: 400px;
+  width: 300px;
+  background-color: aqua;
+  display: flex;
+  /* Flex 컨테이너 설정 */
+  justify-content: center;
+  /* 가로 방향 중앙 정렬 */
+  align-items: center;
+  /* 세로 방향 중앙 정렬 */
+  cursor: pointer;
 }
 
 .expand-button {
-    position:absolute;
-    right: 10px;
-    bottom: 10px;
-    /* 기타 버튼 스타일 */
-  }
-  
-  .modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    background-color: white; /* 흰색 배경 */
-    padding: 20px; /* 다이어그램 주변의 여백 */
-    height: 50%;
-    width: 50%;
-    cursor: pointer;
-    /* 다이어그램 스타일 조정 */
-  }
-  
-  .modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 9;
-  }
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  /* 기타 버튼 스타일 */
+}
 
-  .mermaid-layout {
-    display: flex;
-  }
-  
-  .mermaid-editor {
-    padding: 20px;
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  background-color: white;
+  /* 흰색 배경 */
+  padding: 20px;
+  /* 다이어그램 주변의 여백 */
+  height: 50%;
+  width: 50%;
+  cursor: pointer;
+  /* 다이어그램 스타일 조정 */
+}
 
-  }
-  
-  .mermaid-editor textarea {
-    width: 300px; /* 에디터 너비 조정 */
-    height: 400px; /* 에디터 높이 조정 */
-  }
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9;
+}
 
-  .content-config {
-    
-  }
+.mermaid-layout {
+  display: flex;
+}
 
-  .diagram-setting {
-    background-color: white;
-    height: 100px;
-    padding: 2px;
-    width: 230px;
-    display: flex;
-    flex-direction: column;
-  }
+.mermaid-editor {
+  padding: 10px 20px;
+  background-color: #f7f7f7;
+}
 
-  
+.mermaid-editor textarea {
+  width: 300px;
+  /* 에디터 너비 조정 */
+  height: 350px;
+  /* 에디터 높이 조정 */
+  border: none;
+  overflow: scroll;
+  resize:none;
+}
 
-  .settings-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    background-color: #f7f7f7;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .settings-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .settings-controls {
-    width: 100%;
-  }
-  
-  .settings-label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .language-select {
-    margin-bottom: 20px;
-  }
-  
-  .settings-buttons button {
-    margin-right: 10px;
-  }
+
+.diagram-setting {
+  background-color: white;
+  height: 80px;
+  padding: 10px;
+  width: 230px;
+  display: flex;
+  flex-direction: column;
+}
+
+.editButton {
+  border: none;
+  height: 40px;
+  font-size: 1.2rem;
+  margin-right: 10px;
+  background-color: #f7f7f7;
+}
+
+.settingImg {
+  background-color: #f7f7f7;
+  height: 100%;
+  width: 100%;
+}
+
+.settingButton {
+  height: 29px;
+  width: 31px;
+  background-color: #f7f7f7;
+  border: none;
+  border: black 1px solid;
+  padding: 3px;
+}
+
+.edit-config-buttons {
+  padding: 10px;
+  padding-right: 20px;
+  background-color: #f7f7f7;
+  display: flex;
+  align-items: center;
+}
+
+.edit-button-container {
+  padding:5px;
+}
+
+.edit-button-container button{
+  margin:5px;
+}
+
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.settings-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.settings-controls {
+  width: 100%;
+}
+
+.settings-label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.language-select {
+  margin-bottom: 20px;
+}
+
+.settings-buttons button {
+  margin-right: 10px;
+}
