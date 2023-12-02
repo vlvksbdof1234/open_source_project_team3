@@ -3,6 +3,7 @@ import MenuContainer from "./components/MenuContainer";
 import Navbar from './components/Navbar';
 import { useState } from "react";
 import "./styles/App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const [curMenu, setCurMenu] = useState("code-inspection");
