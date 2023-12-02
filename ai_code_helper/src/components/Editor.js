@@ -5,13 +5,7 @@ import SimpleEditor from 'react-simple-code-editor';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-clike';
 import 'prismjs/components/prism-javascript';
-// import 'prismjs/themes/prism-dark.css';
 import './../styles/prism-gruvbox-dark.css'
-// import 'prismjs/themes/prism-darcula.css';
-// import 'prismjs/themes/prism-gruvbox-dark.css';
- //Example style, you can use another
-// import 'prismjs/themes/prism-darcula.css'; //Example style, you can use another
-
 
 
 
