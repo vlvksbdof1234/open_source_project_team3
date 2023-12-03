@@ -1,7 +1,8 @@
 import { config } from "dotenv";
 // 설정 값을 가져와서
-config()
 import OpenAI from "openai"
+
+config()
 // chatgpt api를 사용한다.
 const apiKey = process.env.API_KEY;
 // api key를 가져옴
