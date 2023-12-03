@@ -1,0 +1,17 @@
+textarea {
+    width: 500px;
+    /* 에디터 너비 조정 */
+    height: 350px;
+    /* 에디터 높이 조정 */
+    border: none;
+    overflow: scroll;
+    resize: none;
+    font-size: 1.3rem;
+    margin-top:30px;
+    margin-left:50px;
+}
+
+h1 {
+    color:white;
+    font-weight: 400;
+  }

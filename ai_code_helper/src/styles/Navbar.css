@@ -1,5 +1,24 @@
+@font-face {
+  font-family: "RobotoMono-Regular";
+  src: url("../fonts/RobotoMono-Regular.ttf") format("truetype");
+}
+
 .navbar {
-    height: 50px;
-    padding: 10px 12px;
-    font-size: 30px;
-  }
+  height: 80px;
+  padding: 10px 12px;
+  font-size: 3rem;
+  color: white;
+  background-color: #252830;
+  padding-top: 40px;
+  padding-left: 60px;
+  font-family: RobotoMono-Regular;
+  display: flex;
+}
+
+img {
+  height: 50px;
+}
+
+.imgDiv {
+  padding-right: 10px;
+}

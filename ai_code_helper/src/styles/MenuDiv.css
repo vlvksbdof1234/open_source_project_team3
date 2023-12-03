@@ -1,27 +1,54 @@
+@font-face {
+    font-family: "RobotoMono-Regular";
+    src: url("../fonts/RobotoMono-Regular.ttf") format("truetype");
+}
+
+
+
 .MenuDiv {
-    width: 100%; /* 각 MenuDiv가 가로를 꽉 채움 */
-    transition: all 0.3s ease; /* 부드러운 전환 효과 */
+    width: 100%;
+    /* 각 MenuDiv가 가로를 꽉 채움 */
+    transition: all 0.3s ease;
+    /* 부드러운 전환 효과 */
     flex-grow: 0;
     overflow: hidden;
     border: 1px black solid;
-    min-height: 40px;
+    min-height: 55px;
 }
 
-.MenuDiv.MenuDiv.active{
+.MenuDiv.MenuDiv.active {
     flex-grow: 2;
 }
 
-.MenuDiv > label {
-    display: block; /* 라벨이 블록 레벨 요소로 표시됨 */
-    width: 100%; /* 라벨이 가로를 꽉 채움 */
-    text-align: center; /* 라벨 텍스트를 중앙 정렬 */
-    padding: 10px 0; /* 라벨의 높이를 설정 */
+.MenuDiv>label {
+    display: block;
+    /* 라벨이 블록 레벨 요소로 표시됨 */
+    width: 100%;
+    /* 라벨이 가로를 꽉 채움 */
+    text-align: center;
+    /* 라벨 텍스트를 중앙 정렬 */
+    padding: 13px 0;
+    /* 라벨의 높이를 설정 */
+    height: 30px;
     overflow: visible;
-    background-color: beige;
+    background-color: rgb(44, 144, 202);
+    color: rgba(200, 201, 204, 0.475);
+    font-size: 1.5rem;
+    cursor: pointer;
+    font-family: RobotoMono-Regular;
+}
+
+.MenuDiv>label:hover {
+    background-color: #6802c7;
+}
+
+.MenuDiv.active>label {
+    background-color: #6802c7;
+    color: white;
 }
 
 .content-container {
-    width: 100%; 
+    width: 100%;
     box-sizing: border-box;
 }
 
@@ -29,7 +56,7 @@
     padding: 20px;
 }
 
-.MenuDiv.active .content-container{
-    max-height:calc(100% - 35px);
+.MenuDiv.active .content-container {
+    max-height: calc(100% - 35px);
     overflow: auto;
 }
