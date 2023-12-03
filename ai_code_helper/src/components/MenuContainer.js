@@ -1,8 +1,8 @@
 import "../styles/MenuContainer.css";
-import MenuDiv from "./MenuDiv";
-import CodeInspectDiv from './CodeInspectDiv';
-import PseudoCodeDiv  from './PseudoCodeDiv';
-import FlowChartDiv from './FlowChartDiv'
+import MenuDiv from "./MenuDiv.js";
+import CodeInspectDiv from './CodeInspectDiv.js';
+import PseudoCodeDiv  from './PseudoCodeDiv.js';
+import FlowChartDiv from './FlowChartDiv.js'
 
 function MenuContainer({ curMenu, setCurMenu }) {
 
