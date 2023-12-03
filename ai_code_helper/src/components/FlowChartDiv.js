@@ -83,7 +83,7 @@ export const FlowChartDiv = () => {
           placeholder="Type Function or Logic"
           className="diagram-config-input"
         />
-        <button onClick>Generate</button>
+        <button>Generate</button>
       </div>
 
       <div className="mermaid-container">
