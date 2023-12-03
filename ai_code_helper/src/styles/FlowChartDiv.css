@@ -35,6 +35,11 @@
   display:flex;
 }
 
+h1 {
+  color:white;
+  font-weight: 400;
+}
+
 .generate-container input{
   height: 30px;
   font-size: 1.5rem;

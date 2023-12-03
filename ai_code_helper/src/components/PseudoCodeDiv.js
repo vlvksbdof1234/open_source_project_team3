@@ -4,7 +4,7 @@ import "../styles/PseudoCode.css"
 export const PseudoCodeDiv = () => {
   return (
     <div>
-      <h1>PseudoCodeDiv</h1>
+      <h1>Pseudo Code</h1>
       <div className="generate-container">
         <input
           placeholder="Type Function or Logic"

@@ -7,3 +7,8 @@ textarea {
     overflow: scroll;
     resize: none;
 }
+
+h1 {
+    color:white;
+    font-weight: 400;
+  }

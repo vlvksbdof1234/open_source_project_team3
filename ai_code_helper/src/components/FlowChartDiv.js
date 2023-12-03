@@ -77,7 +77,7 @@ export const FlowChartDiv = () => {
 
   return (
     <div>
-      <h1>FlowChart</h1>
+      <h1>Flow Chart</h1>
       <div className="generate-container">
         <input
           placeholder="Type Function or Logic"
