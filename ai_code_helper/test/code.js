@@ -323,23 +323,88 @@ var currentCode = `
 "`
 
 
-// flowchartconfig : flowchart를 그리는 설정 내용인걸로 보이는데
-// 당장은 사용안함
-var flowchartConfig = "very simple"
-// 복잡도
-var complexity = "매우 간단"
-// var complexity = "보통"
-// var complexity = "상세하게"
-var language = "한국어";
-var language = "영어";
-// ${flowchartConfig}
+// code.js
+let flowchartConfig1 = "very simple";
+let complexity1 = "매우 간단";
+let language1 = "한국어";
 
-var promptCustom = `아래 코드 "${currentCode}"의 mermaid code를 아래 조건에 맞게 작성해줘
+let promptCustom1 = `아래 코드 "${currentCode}"의 mermaid code를 아래 조건에 맞게 작성해줘
 조건
- : "${complexity}"
-언어 : "${language}"
+ : "${complexity1}"
+언어 : "${language1}"
 출력은 설명하지말고 code만 출력해줘`;
 
-console.log(promptCustom);
+//console.log(promptCustom1);
 
-export var promptCustom;
+export { promptCustom1 };
+
+// codelnspect.js
+let flowchartConfig2 = "very simple";
+let complexity2 = "매우 간단";
+let language2 = "한국어";
+
+let promptCustom2 = `함수별로 코드 ${currentCode} 분석결과를 아래 출력양식과 조건에 맞춰서, 분석내용 작성해줄래?
+
+조건 : ${complexity2}
+언어 : ${language2}
+
+출력 양식 :
+- 함수명
+- 함수별 핵심코드
+- 함수별 코드 분석`;
+
+//console.log(promptCustom2);
+
+export { promptCustom2 };
+
+//comment.js
+let flowchartConfig3 = "very simple";
+let complexity3 = "매우 간단";
+let language3 = "한국어";
+
+let promptCustom3 = `아래 코드${currentCode}에 대해서 최대한 상세하게 많은 줄에 주석을 달아줘
+
+조건 : ${complexity3}
+언어 : ${language3}`;
+
+
+//console.log(promptCustom3);
+
+export { promptCustom3 };
+
+//flowchartgenerate.js
+let flowchartConfig4 = "very simple";
+let complexity4 = "매우 간단";
+let language4 = "한국어";
+
+let promptCustom4 = `아래 코드${currentCode}를 함수별로 플로우차트 그리기 위해서 flowchart td를 mermaid code로 간단하게 작성해줘
+
+조건 : ${complexity4}
+언어 : ${language4}
+괄호와 따옴표는 사용하지 말아줘
+출력은 설명하지말고 code만 출력해줘`;
+
+
+//console.log(promptCustom4);
+
+export { promptCustom4 };
+
+//pseudocode.js
+let flowchartConfig5 = "very simple";
+let complexity5 = "매우 간단";
+let language5 = "한국어";
+
+let promptCustom5 = `아래 코드${currentCode}를 읽고 함수별로 텍스트로 된 pseudo code를 아래 출력 형식에 맞춰서 생성부탁해
+
+조건 : ${complexity5}
+언어 : ${language5}
+Class className:
+    Attributes:
+        type variableName:
+    Methods:
+    Events:
+    `;
+console.log(promptCustom5);
+
+export { promptCustom5 };
+

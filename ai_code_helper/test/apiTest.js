@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-import { promptCustom } from './code.js'
+import { promptCustom1,promptCustom2,promptCustom3,promptCustom4,promptCustom5 } from './code.js'
 // 설정 값을 가져와서
 config()
 import OpenAI from "openai"
@@ -25,4 +25,4 @@ const chatCompletionsCreate = async chatPrompt =>
     // 결과를 res (response) 에 저장
     console.log("chatCompletionsCreate", res.choices[0].message.content);
 }
-chatCompletionsCreate(promptCustom);
+chatCompletionsCreate(promptCustom1);
