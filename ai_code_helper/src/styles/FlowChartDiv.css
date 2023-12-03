@@ -3,16 +3,15 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-color: bisque;
   min-height: 600px;
   width: 100%;
-  padding:30px;
+  padding: 30px;
 }
 
 .mermaid {
   height: 400px;
-  width: 300px;
-  background-color: aqua;
+  width: 400px;
+  padding: 20px;
   display: flex;
   /* Flex 컨테이너 설정 */
   justify-content: center;
@@ -20,6 +19,16 @@
   align-items: center;
   /* 세로 방향 중앙 정렬 */
   cursor: pointer;
+  background-color: white;
+  border: solid;
+  border-width: 10px;
+  border-color: #f7f7f7;
+}
+
+.mermaid svg {
+  background-color: rgb(255, 255, 255);
+  /* min-width: 400px; */
+  height: 400px;
 }
 
 .expand-button {
@@ -30,18 +39,23 @@
 }
 
 .generate-container {
-  padding:10px;
+  padding: 10px;
   align-items: center;
-  display:flex;
+  display: flex;
 }
 
-.generate-container input{
+h1 {
+  color: white;
+  font-weight: 400;
+}
+
+.generate-container input {
   height: 30px;
   font-size: 1.5rem;
   margin-right: 10px;
 }
 
-.generate-container button{
+.generate-container button {
   height: 35px;
   font-size: 1.5rem;
 }
@@ -88,7 +102,7 @@
   /* 에디터 높이 조정 */
   border: none;
   overflow: scroll;
-  resize:none;
+  resize: none;
 }
 
 
@@ -133,11 +147,11 @@
 }
 
 .edit-button-container {
-  padding:5px;
+  padding: 5px;
 }
 
-.edit-button-container button{
-  margin:5px;
+.edit-button-container button {
+  margin: 5px;
 }
 
 .settings-container {
