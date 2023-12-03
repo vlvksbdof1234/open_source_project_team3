@@ -1,8 +1,6 @@
 import { config } from "dotenv";
 // 설정 값을 가져와서
 import OpenAI from "openai"
-
-
 config()
 // chatgpt api를 사용한다.
 const apiKey = process.env.API_KEY;
@@ -25,7 +23,24 @@ const chatCompletionsCreate = async chatPrompt =>
     // 결과를 res (response) 에 저장
     console.log("chatCompletionsCreate", res.choices)
 }
+
 chatCompletionsCreate("12+4");
-// 12 + 4의 결과를 가져와라
-// key billing free 
-// 
+
+const createCodeInspection = (code) => {
+    return result;
+}
+
+const createFlowChartMermaid = (code, query, complexity, language) => {
+
+    prompt = `${code} 를 읽고 ${query}에 대한 flowchart를 mermaid 코드를 작성해줘. 복잡한 정도를 simple, normal, specific 로 나눴을 때, ${complexity} 만큼 상세하게 작성하고, 언어는 ${language}로 작성해줘`
+
+    return flowChartCode;
+}
+
+
+const createPseudoMermaid = (code, query, complexity, language) => {
+
+    prompt = `${code} 를 읽고 ${query}에 대한 PseudoCode를 mermaid 코드를 작성해줘. 복잡한 정도를 simple, normal, specific 로 나눴을 때, ${complexity} 만큼 상세하게 작성하고, 언어는 ${language}로 작성해줘`
+    
+    return pseudoCode;
+}
