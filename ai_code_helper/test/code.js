@@ -1,3 +1,4 @@
+//입력받은 코드 (분석할 코드)
 var currentCode = `
 "
 1. import java.awt.*;  
@@ -321,14 +322,24 @@ var currentCode = `
 319. }//class  
 "`
 
+
+// flowchartconfig : flowchart를 그리는 설정 내용인걸로 보이는데
+// 당장은 사용안함
 var flowchartConfig = "very simple"
+// 복잡도
 var complexity = "매우 간단"
+// var complexity = "보통"
+// var complexity = "상세하게"
 var language = "한국어";
+var language = "영어";
 // ${flowchartConfig}
+
 var promptCustom = `아래 코드 "${currentCode}"의 mermaid code를 아래 조건에 맞게 작성해줘
 조건
-복잡도 : "${complexity}"
+ : "${complexity}"
 언어 : "${language}"
 출력은 설명하지말고 code만 출력해줘`;
+
+console.log(promptCustom);
 
 export var promptCustom;
