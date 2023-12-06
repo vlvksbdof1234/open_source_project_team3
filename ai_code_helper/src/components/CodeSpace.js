@@ -1,36 +1,36 @@
 import React, { useState, useEffect } from "react";
 import Editor from "./Editor";
 import "./../styles/CodeSpace.css";
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+// import Modal from 'react-bootstrap/Modal';
+// import Button from 'react-bootstrap/Button';
 
-function MyVerticallyCenteredModal(props) {
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          git diff heading
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-      <div className={`editor mr-0 `}>
-          <Editor></Editor>
-        </div>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
+// function MyVerticallyCenteredModal(props) {
+//   return (
+//     <Modal
+//       {...props}
+//       size="lg"
+//       aria-labelledby="contained-modal-title-vcenter"
+//       centered
+//     >
+//       <Modal.Header closeButton>
+//         <Modal.Title id="contained-modal-title-vcenter">
+//           git diff heading
+//         </Modal.Title>
+//       </Modal.Header>
+//       <Modal.Body>
+//       <div className={`editor mr-0 `}>
+//           <Editor></Editor>
+//         </div>
+//       </Modal.Body>
+//       <Modal.Footer>
+//         <Button onClick={props.onHide}>Close</Button>
+//       </Modal.Footer>
+//     </Modal>
+//   );
+// }
 
 function CodeSpace() {
-  const [modalShow, setModalShow] = useState(false);
+  // const [modalShow, setModalShow] = useState(false);
   const [curMenu, setCurMenu] = useState("code-inspection");
 
   const [value, updateValue] = useState("");
@@ -100,15 +100,15 @@ function CodeSpace() {
         >
           Run
         </div>
-        <Button variant="primary" onClick={() => setModalShow(true)}>
+        {/* <Button variant="primary" onClick={() => setModalShow(true)}>
         git diff
-      </Button>
+      </Button> */}
       
       </div>
-      <MyVerticallyCenteredModal
+      {/* <MyVerticallyCenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}
-      />
+      /> */}
     </div>
     
   );
