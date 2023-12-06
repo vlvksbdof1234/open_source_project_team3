@@ -4,19 +4,6 @@ body {
     user-select: none;
 }
 
-/* .editorbox{  overflow-y: scroll; max-height: calc(100%);} 
-.editorbox::-webkit-scrollbar {  width: 10px;  }
-.editorbox::-webkit-scrollbar-thumb
-{
-    height: 30%;
-    background: #848484;
-    border-radius: 10px;
-}
-.editorbox::-webkit-scrollbar-track {
-    background: #84848447;
-      
-    } */
-
 
 
 .codeSpace {
@@ -139,3 +126,19 @@ body {
     /* height:100%; */
 }
 
+
+.footer-button {
+    cursor: pointer;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 5px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: 0.3s;
+    margin-right: 30px;
+  }
+  
+.primary-footer-button {
+background-color: rgba(37,39,40,255);
+color: white;
+}

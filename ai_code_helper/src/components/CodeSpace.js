@@ -3,30 +3,17 @@ import Editor from "./Editor";
 import DiffEditor from "./diffEditor";
 import "./../styles/CodeSpace.css";
 import Modal from "../components/Modal"
+import { createCodeInspection } from "../apiService";
 
 
-function CodeSpace({ currentCode, setCurrentCode, currentDiff, setCurrentDiff}) {
+function CodeSpace({ currentCode, setCurrentCode, currentDiff, setCurrentDiff, setCodeInspect}) {
 
   const [value, updateValue] = useState("");
   const [jsvalue, updatejsValue] = useState("");
   const [cssvalue, updatecssValue] = useState("");
   const [preview, updatePreview] = useState("");
-  // const [dark, updateDark] = useState(false);
-  // const [selected, updateSelected] = useState("HTML");
   const [modalOpen, setModalOpen] = useState(false);
 
-  // function download(filename, text) {
-  //   var element = document.createElement("a");
-  //   element.setAttribute(
-  //     "href",
-  //     "data:text/plain;charset=utf-8," + encodeURIComponent(text)
-  //   );
-  //   element.setAttribute("download", filename);
-  //   element.style.display = "none";
-  //   document.body.appendChild(element);
-  //   element.click();
-  //   document.body.removeChild(element);
-  // }
   
   function addStyle(styleString) {
     const style = document.createElement("style");
@@ -39,6 +26,10 @@ function CodeSpace({ currentCode, setCurrentCode, currentDiff, setCurrentDiff}) 
   }
   const closeModal = () => {
     setModalOpen(false)
+  }
+
+  const callGpt = () => {
+    createCodeInspection(currentCode,setCodeInspect);
   }
 
   useEffect(() => {
@@ -58,24 +49,18 @@ function CodeSpace({ currentCode, setCurrentCode, currentDiff, setCurrentDiff}) 
         </div>
       </div>
       <div className="footer">
-        <div
-          className={`run`}
-          onClick={() => {
-            updatePreview(value);
-            try {
-              eval(jsvalue);
-            } catch (e) {
-              alert("Please verify your JS");
-            }
-            addStyle(cssvalue);
-          }}
-        >
-          Run
-        </div>
 
-        <button onClick={openModal}>모달팝업</button>
+      <button className={`footer-button primary-footer-button`} onClick={callGpt}>
+        RUN
+      </button>
+
+      <button className={`footer-button primary-footer-button`} onClick={openModal}>
+        Git diff
+      </button>
+
+        {/* <button onClick={openModal}>Git Diff</button> */}
       
-      <Modal open={modalOpen} close={closeModal} header="Modal heading">
+      <Modal open={modalOpen} close={closeModal} header="Git Diff">
       <div className="playground">
         <div className={`editor mr-0 editorbox`}>
         <DiffEditor currentCode={currentDiff} setCurrentCode={setCurrentDiff}></DiffEditor>
