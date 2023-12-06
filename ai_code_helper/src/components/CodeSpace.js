@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Editor from "./Editor";
 import "./../styles/CodeSpace.css";
+import Modal from "../components/Modal"
+
+
 // import Modal from 'react-bootstrap/Modal';
 // import Button from 'react-bootstrap/Button';
 
@@ -30,6 +33,8 @@ import "./../styles/CodeSpace.css";
 // }
 
 function CodeSpace() {
+
+
   // const [modalShow, setModalShow] = useState(false);
   const [curMenu, setCurMenu] = useState("code-inspection");
 
@@ -39,6 +44,7 @@ function CodeSpace() {
   const [preview, updatePreview] = useState("");
   const [dark, updateDark] = useState(false);
   const [selected, updateSelected] = useState("HTML");
+  const [modalOpen, setModalOpen] = useState(false);
 
   function download(filename, text) {
     var element = document.createElement("a");
@@ -56,6 +62,13 @@ function CodeSpace() {
     const style = document.createElement("style");
     style.textContent = styleString;
     document.head.append(style);
+  }
+
+  const openModal = () => {
+    setModalOpen(true)
+  }
+  const closeModal = () => {
+    setModalOpen(false)
   }
 
   useEffect(() => {
@@ -100,15 +113,14 @@ function CodeSpace() {
         >
           Run
         </div>
-        {/* <Button variant="primary" onClick={() => setModalShow(true)}>
-        git diff
-      </Button> */}
+
+        <button onClick={openModal}>모달팝업</button>
+      
+      <Modal open={modalOpen} close={closeModal} header="Modal heading">
+        <Editor></Editor>
+      </Modal>
       
       </div>
-      {/* <MyVerticallyCenteredModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      /> */}
     </div>
     
   );
