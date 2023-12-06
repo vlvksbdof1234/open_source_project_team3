@@ -7,7 +7,7 @@ const Modal = props => {
 
   return (
     // 모달이 열릴때 openModal 클래스가 생성된다.
-    <div className={open ? "openModal modal" : "modal"}>
+    <div className={open ? "openModal diffModal" : "diffModal"}>
       {open ? (
         <section>
           <header>
