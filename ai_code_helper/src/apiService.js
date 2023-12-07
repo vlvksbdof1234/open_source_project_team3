@@ -26,21 +26,21 @@ const chatCompletionsCreate = async chatPrompt =>
 
 chatCompletionsCreate("12+4");
 
-const createCodeInspection = (code) => {
-    return result;
-}
+// const createCodeInspection = (code) => {
+//     return result;
+// }
 
-const createFlowChartMermaid = (code, query, complexity, language) => {
+// const createFlowChartMermaid = (code, query, complexity, language) => {
 
-    prompt = `${code} 를 읽고 ${query}에 대한 flowchart를 mermaid 코드를 작성해줘. 복잡한 정도를 simple, normal, specific 로 나눴을 때, ${complexity} 만큼 상세하게 작성하고, 언어는 ${language}로 작성해줘`
+//     prompt = `${code} 를 읽고 ${query}에 대한 flowchart를 mermaid 코드를 작성해줘. 복잡한 정도를 simple, normal, specific 로 나눴을 때, ${complexity} 만큼 상세하게 작성하고, 언어는 ${language}로 작성해줘`
 
-    return flowChartCode;
-}
+//     return flowChartCode;
+// }
 
 
-const createPseudoMermaid = (code, query, complexity, language) => {
+// const createPseudoMermaid = (code, query, complexity, language) => {
 
-    prompt = `${code} 를 읽고 ${query}에 대한 PseudoCode를 mermaid 코드를 작성해줘. 복잡한 정도를 simple, normal, specific 로 나눴을 때, ${complexity} 만큼 상세하게 작성하고, 언어는 ${language}로 작성해줘`
+//     prompt = `${code} 를 읽고 ${query}에 대한 PseudoCode를 mermaid 코드를 작성해줘. 복잡한 정도를 simple, normal, specific 로 나눴을 때, ${complexity} 만큼 상세하게 작성하고, 언어는 ${language}로 작성해줘`
     
-    return pseudoCode;
-}
+//     return pseudoCode;
+// }

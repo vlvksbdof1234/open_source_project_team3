@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Editor from "./Editor";
+import Editor from "./Editor.js";
 import "./../styles/CodeSpace.css";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
