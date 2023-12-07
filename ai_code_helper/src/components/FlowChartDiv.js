@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import mermaid from "mermaid";
 import "../styles/FlowChartDiv.css";
 import logo from "../image/settingLogo.png";
+import {createFlowChartMermaid} from "../apiService"
 
-export const FlowChartDiv = () => {
+export const FlowChartDiv = (curCode) => {
   const initialMermaidCode = `
     graph TD;
     A-->B;
@@ -83,7 +84,7 @@ export const FlowChartDiv = () => {
           placeholder="Type Function or Logic"
           className="diagram-config-input"
         />
-        <button>Generate</button>
+        <button onClick={()=>createFlowChartMermaid(curCode)}>Generate</button>
       </div>
 
       <div className="mermaid-container">

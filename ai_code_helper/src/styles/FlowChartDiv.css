@@ -96,9 +96,10 @@ h1 {
 }
 
 .mermaid-editor textarea {
-  width: 500px;
+  width: 700px;
+  font-size: 1rem;
   /* 에디터 너비 조정 */
-  height: 350px;
+  height: 400px;
   /* 에디터 높이 조정 */
   border: none;
   overflow: scroll;

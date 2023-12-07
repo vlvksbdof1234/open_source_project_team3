@@ -1,15 +1,13 @@
-import { config } from "dotenv";
 // 설정 값을 가져와서
 import OpenAI from "openai"
-config()
 // chatgpt api를 사용한다.
-const apiKey = process.env.API_KEY;
+const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
 // api key를 가져옴
-const model = "text-curie-001";
+const model = "gpt-3.5-turbo";
 // 사용 하는 모델 지정
-console.log(apiKey);
+// console.log(apiKey);
 // key 잘 가져왔는지 확인
-const open_ai = new OpenAI({ apiKey })
+const open_ai = new OpenAI({ apiKey: apiKey , dangerouslyAllowBrowser: true })
 // lib 활용하는 객체 선언
 
 
@@ -30,12 +28,12 @@ chatCompletionsCreate("12+4");
 //     return result;
 // }
 
-// const createFlowChartMermaid = (code, query, complexity, language) => {
+export const createFlowChartMermaid = (code, query="B+ ADD", complexity="Simple", language="English") => {
 
-//     prompt = `${code} 를 읽고 ${query}에 대한 flowchart를 mermaid 코드를 작성해줘. 복잡한 정도를 simple, normal, specific 로 나눴을 때, ${complexity} 만큼 상세하게 작성하고, 언어는 ${language}로 작성해줘`
+    prompt = `${code} 를 읽고 ${query}에 대한 flowchart를 mermaid 코드를 작성해줘. 복잡한 정도를 simple, normal, specific 로 나눴을 때, ${complexity} 만큼 상세하게 작성하고, 언어는 ${language}로 작성해줘`
 
-//     return flowChartCode;
-// }
+    chatCompletionsCreate(prompt);
+}
 
 
 // const createPseudoMermaid = (code, query, complexity, language) => {
@@ -44,3 +42,5 @@ chatCompletionsCreate("12+4");
     
 //     return pseudoCode;
 // }
+
+
