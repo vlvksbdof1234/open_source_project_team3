@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import mermaid from "mermaid";
 import "../styles/FlowChartDiv.css";
 import logo from "../image/settingLogo.png";
-import {createFlowChartMermaid} from "../apiService"
+import { createFlowChartMermaid } from "../apiService";
+import LoadingSpinner from "./LoadingSpinner";
 
-export const FlowChartDiv = (curCode) => {
+export const FlowChartDiv = ({ curCode }) => {
   const initialMermaidCode = `
     graph TD;
     A-->B;
@@ -12,7 +13,7 @@ export const FlowChartDiv = (curCode) => {
     B-->D;
     C-->D;
   `;
-
+  const [showMermaid, setShowMermaid] = useState(false);
   const [mermaidCode, setMermaidCode] = useState(initialMermaidCode);
   const [renderedMermaidCode, setRenderedMermaidCode] =
     useState(initialMermaidCode);
@@ -23,6 +24,8 @@ export const FlowChartDiv = (curCode) => {
   const [detailLevel, setDetailLevel] = useState("basic");
   const [language, setLanguage] = useState("English");
   const [isEditOpen, setEditIsOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -36,8 +39,14 @@ export const FlowChartDiv = (curCode) => {
   };
 
   const renderMermaid = () => {
-    mermaid.initialize({ startOnLoad: true });
+    mermaid.initialize({ startOnLoad: false });
     const mermaidElement = document.getElementById("mermaid-diagram");
+
+    // mermaid-diagram 요소가 존재하지 않으면 함수를 종료합니다.
+    if (!mermaidElement) {
+      return;
+    }
+
     if (mermaidElement.getAttribute("data-processed")) {
       mermaidElement.removeAttribute("data-processed");
     }
@@ -46,6 +55,7 @@ export const FlowChartDiv = (curCode) => {
 
   const applyChanges = () => {
     setRenderedMermaidCode(mermaidCode);
+    // renderMermaid();
   };
 
   const resetChanges = () => {
@@ -72,9 +82,40 @@ export const FlowChartDiv = (curCode) => {
     setShowSettings(false);
   };
 
+  // useEffect(() => {
+  //   if(showMermaid)
+  //     renderMermaid();
+  // }, [renderedMermaidCode]);
+
+  // useEffect(() => {
+  //   console.log(
+  //     `복잡도: ${detailLevel} 언어: ${language} 생성 대상: ${query} 코드: ${curCode}`
+  //   );
+  // });
+
   useEffect(() => {
     renderMermaid();
   }, [renderedMermaidCode]);
+
+
+  const handleClick = async () => {
+    setShowSettings(false);
+    setIsLoading(true);
+    setShowMermaid(false);
+    await createFlowChartMermaid(
+      curCode,
+      query,
+      detailLevel,
+      language,
+      setIsLoading,
+      setMermaidCode,
+      setRenderedMermaidCode,
+      setShowMermaid
+    );
+    // setMermaidCode()
+    setIsLoading(false);
+    setShowMermaid(true);
+  };
 
   return (
     <div>
@@ -83,91 +124,96 @@ export const FlowChartDiv = (curCode) => {
         <input
           placeholder="Type Function or Logic"
           className="diagram-config-input"
+          onChange={(e) => setQuery(e.target.value)}
         />
-        <button onClick={()=>createFlowChartMermaid(curCode)}>Generate</button>
+        <button onClick={handleClick}>Generate</button>
       </div>
 
-      <div className="mermaid-container">
-        <div
-          className={`mermaid ${isModalOpen ? "modal" : ""}`}
-          onClick={toggleModal}
-          id="mermaid-diagram"
-        >
-          {renderedMermaidCode}
-        </div>
-        <div className="edit-config-buttons">
-          <button className="editButton" onClick={toggleEdit}>
-            View & Edit Code
-          </button>
-          <button className="settingButton" onClick={toggleSettings}>
-            <img className="settingImg" alt="settingLogo.png" src={logo} />
-          </button>
-        </div>
+      {isLoading && <LoadingSpinner />}
 
-        {showSettings && (
-          <div className="diagram-setting">
-            <div className="complex-setting">
-              <div className="content-config">
-                <label>
-                  <input
-                    type="radio"
-                    name="detailLevel"
-                    value="basic"
-                    checked={tempDetailLevel === "basic"}
-                    onChange={() => setTempDetailLevel("basic")}
-                  />{" "}
-                  단순
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="detailLevel"
-                    value="basic"
-                    checked={tempDetailLevel === "basic"}
-                    onChange={() => setTempDetailLevel("basic")}
-                  />{" "}
-                  기본
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    name="detailLevel"
-                    value="advanced"
-                    checked={tempDetailLevel === "advanced"}
-                    onChange={() => setTempDetailLevel("advanced")}
-                  />{" "}
-                  복잡
-                </label>
+      {showMermaid && (
+        <div className="mermaid-container">
+          <div
+            className={`mermaid ${isModalOpen ? "modal" : ""}`}
+            onClick={toggleModal}
+            id="mermaid-diagram"
+          >
+            {renderedMermaidCode}
+          </div>
+          <div className="edit-config-buttons">
+            <button className="editButton" onClick={toggleEdit}>
+              View & Edit Code
+            </button>
+            <button className="settingButton" onClick={toggleSettings}>
+              <img className="settingImg" alt="settingLogo.png" src={logo} />
+            </button>
+          </div>
+
+          {showSettings && (
+            <div className="diagram-setting">
+              <div className="complex-setting">
+                <div className="content-config">
+                  <label>
+                    <input
+                      type="radio"
+                      name="detailLevel"
+                      value="basic"
+                      checked={tempDetailLevel === "basic"}
+                      onChange={() => setTempDetailLevel("basic")}
+                    />{" "}
+                    단순
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="detailLevel"
+                      value="basic"
+                      checked={tempDetailLevel === "basic"}
+                      onChange={() => setTempDetailLevel("basic")}
+                    />{" "}
+                    기본
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="detailLevel"
+                      value="advanced"
+                      checked={tempDetailLevel === "advanced"}
+                      onChange={() => setTempDetailLevel("advanced")}
+                    />{" "}
+                    복잡
+                  </label>
+                </div>
+                <select
+                  value={tempLanguage}
+                  onChange={(e) => setTempLanguage(e.target.value)}
+                >
+                  <option value="English">영어</option>
+                  <option value="Korean">한국어</option>
+                </select>
               </div>
-              <select
-                value={tempLanguage}
-                onChange={(e) => setTempLanguage(e.target.value)}
-              >
-                <option value="English">영어</option>
-                <option value="Korean">한국어</option>
-              </select>
+              <div className="config-button">
+                <button onClick={applySettingChanges}>설정 적용</button>
+                <button onClick={cancelSettingChanges}>설정 취소</button>
+              </div>
             </div>
-            <div className="config-button">
-              <button onClick={applySettingChanges}>설정 적용</button>
-              <button onClick={cancelSettingChanges}>설정 취소</button>
+          )}
+          {isEditOpen && (
+            <div className="mermaid-editor">
+              <textarea
+                value={mermaidCode}
+                onChange={(e) => setMermaidCode(e.target.value)}
+              />
+              <div className="edit-button-container">
+                <button onClick={applyChanges}>적용</button>
+                <button onClick={resetChanges}>초기화</button>
+              </div>
             </div>
-          </div>
-        )}
-        {isEditOpen && (
-          <div className="mermaid-editor">
-            <textarea
-              value={mermaidCode}
-              onChange={(e) => setMermaidCode(e.target.value)}
-            />
-            <div className="edit-button-container">
-              <button onClick={applyChanges}>적용</button>
-              <button onClick={resetChanges}>초기화</button>
-            </div>
-          </div>
-        )}
+          )}
 
-        {isModalOpen && <div className="modal-backdrop"></div>}
-      </div>
+          {isModalOpen && <div className="modal-backdrop"></div>}
+        </div>
+      )}
     </div>
   );
 };
