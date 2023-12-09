@@ -39,7 +39,7 @@ export const FlowChartDiv = ({ curCode }) => {
   };
 
   const renderMermaid = () => {
-    mermaid.initialize({ startOnLoad: false });
+    mermaid.initialize({ startOnLoad: true });
     const mermaidElement = document.getElementById("mermaid-diagram");
 
     // mermaid-diagram 요소가 존재하지 않으면 함수를 종료합니다.
@@ -97,6 +97,11 @@ export const FlowChartDiv = ({ curCode }) => {
     renderMermaid();
   }, [renderedMermaidCode]);
 
+  // useEffect(() => {
+  //   if (showMermaid) {
+  //     renderMermaid();
+  //   }
+  // }, [showMermaid]);
 
   const handleClick = async () => {
     setShowSettings(false);
@@ -115,6 +120,9 @@ export const FlowChartDiv = ({ curCode }) => {
     // setMermaidCode()
     setIsLoading(false);
     setShowMermaid(true);
+
+    console.log("디테일: " + detailLevel);
+    console.log("언어: " + language);
   };
 
   return (
@@ -126,7 +134,14 @@ export const FlowChartDiv = ({ curCode }) => {
           className="diagram-config-input"
           onChange={(e) => setQuery(e.target.value)}
         />
-        <button onClick={handleClick}>Generate</button>
+        <button
+          onClick={() => {
+            handleClick();
+            applyChanges();
+          }}
+        >
+          Generate
+        </button>
       </div>
 
       {isLoading && <LoadingSpinner />}

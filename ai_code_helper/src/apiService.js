@@ -66,17 +66,19 @@ export const createFlowChartMermaid = async (
       .replaceAll("```", "")
       .replaceAll("mermaid", "")
   );
-  setMermaidCode(
-    res.choices[0]["message"]["content"]
-      .replaceAll("```", "")
-      .replaceAll("mermaid", "")
-  );
 
-  setRenderedMermaidCode(
-    res.choices[0]["message"]["content"]
-      .replaceAll("```", "")
-      .replaceAll("mermaid", "")
-  );
+  const result = res.choices[0]["message"]["content"]
+    .replaceAll("```", "")
+    .replaceAll("mermaid", "");
+  setMermaidCode(result);
+
+  setRenderedMermaidCode(result);
+
+  // setRenderedMermaidCode(
+  //   res.choices[0]["message"]["content"]
+  //     .replaceAll("```", "")
+  //     .replaceAll("mermaid", "")
+  // );
 };
 
 // setRenderedMermaidCode(
