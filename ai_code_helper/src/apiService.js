@@ -19,35 +19,29 @@ const chatCompletionsCreate = async chatPrompt =>
 { const res = await open_ai.chat.completions.create({
     messages: [ 
         { role: "system", content: "You are good at programmer." },
-        // role 지정
-        { role: "user", content: chatPrompt }, ], model: model, max_tokens: 1024})
-        // console.log("chatCompletionsCreate", res.choices[0].message.content);
+        { role: "user", content: chatPrompt }, ], model: model, max_tokens: 2048})
         return res.choices[0].message.content;
-    // 결과를 res (response) 에 저장
-    // console.log("chatCompletionsCreate", res.choices)
 }
 
 
-export const createCodeInspection = (code, setCodeInspect) => {
+export const createCodeInspection = (code, setCodeInspect, setCodeInspectIsLoading) => {
     let complexity = "매우 간단";
     let language = "한국어";
 
-    let promptCustom = `함수별로 코드 ${code} 분석결과를 아래 출력양식과 조건에 맞춰서, 분석내용 작성해줄래? 
+    let promptCustom = `함수별로 코드 """${code}""" 분석결과를 아래 출력양식과 조건에 맞춰서, 분석내용 작성해줄래? 
     
-    코드만 이렇게 아래 코드 출력 부분 단어에 채워줘
-    <ReadOnlyEditor currentCode={"코드 출력 부분"} ></ReadOnlyEditor>
-    
-
     조건 : ${complexity}
     언어 : ${language}
 
-    출력 양식 :
-    - 함수명
-    - 함수별 핵심코드
-    - 함수별 코드 분석`;
-    console.log(promptCustom);
+    출력 방법은 아래 json.parse 함수가 가능하도록 \n는 사용하지 않고 json 형식에 꼭 맞춰서해줘
+    
+    [context : {function_name, "main_code_by_function", code_analysis_by_function }]`;
+
+    setCodeInspect("");
+    setCodeInspectIsLoading(true);  
     chatCompletionsCreate(promptCustom).then((res)=>{
-        setCodeInspect(res)
+        res=res.replace(/\n/g, "").replace("\n", '\\n').replace("\t", "\\t");
+        setCodeInspect(res);   
     });
 }
 

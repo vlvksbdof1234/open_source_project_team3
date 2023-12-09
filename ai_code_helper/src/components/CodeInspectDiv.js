@@ -1,22 +1,54 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import ReadOnlyEditor from "./ReadOnlyEditor";
+// import JsxParser from 'react-jsx-parser';
+import "./../styles/CodeSpaceInspect.css";
 
-export const CodeInspectDiv = ({codeInspect}) => {
-  // 여기에서 작업 
-  // useEffect(() => {
-  //   const codeInspectDiv = document.querySelector('#codeInspect');
 
-  //   const messageElement = document.createElement('div');
-  //   // 생성된 요소에 클래스 추가
-  //   messageElement.className = 'message';
-  //    // 채팅 메시지 목록에 새로운 메시지 추가
-  //   messageElement.innerHTML = `${codeInspect}`;
-  //   codeInspectDiv.prepend(messageElement);
 
-  // }, [codeInspect]);
+export const CodeInspectDiv = ({codeInspect,isCodeInspectLoading,setCodeInspectIsLoading}) => {
+  
+  const [codeInspectJson, setCodeInspectJson] = useState("");
+  const [isError, setIsError] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    if(codeInspect) {
+      try{
+        console.log(JSON.parse(codeInspect));
+        setIsError(false);
+        setCodeInspectJson(JSON.parse(codeInspect).context);
+        setCodeInspectIsLoading(false);
+      }
+      catch(err){ 
+        console.log(err);
+        setIsError(true);
+        setCodeInspectIsLoading(false);
+        
+      }
+    }
+  }, [codeInspect]);
+
+  useEffect(() => {
+    console.log(codeInspect);
+    if(isError) {
+      setCodeInspectJson("");
+      }
+  }, [isError]);
+
+  
+
 
   return (
-    <div id="codeInspect">{codeInspect}</div>
+    <div id="codeInspect" className='codeInspect'>
+      {codeInspectJson ? (
+      <>
+      {codeInspectJson.map(p =>{
+          
+          return <><ReadOnlyEditor currentCode={p.main_code_by_function}></ReadOnlyEditor><h3>함수 명 : ${p.function_name} + 코드별 분석 : ${p.code_analysis_by_function}</h3></>;
+      })}
+      </>):""}
+      {isError ? (<h1>ERROR</h1>):""}
+      {isCodeInspectLoading ? (<h1>LOADING</h1>):""}
+    </div>
   )
 }
 

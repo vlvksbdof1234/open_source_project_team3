@@ -10,10 +10,10 @@ import './../styles/prism-gruvbox-dark.css'
 
 
 
-export default function Editor ({currentCode}) {
+export default function ReadOnlyEditor ({currentCode}) {
   return (
     <SimpleEditor
-      className={"editorbox"}
+      className={"readOnlyEditor"}
       value={currentCode}
       highlight={currentCode => highlight(currentCode, languages.js)}
       padding={10}

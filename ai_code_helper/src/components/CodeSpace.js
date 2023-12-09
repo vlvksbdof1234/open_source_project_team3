@@ -6,7 +6,7 @@ import Modal from "../components/Modal"
 import { createCodeInspection } from "../apiService";
 
 
-function CodeSpace({ currentCode, setCurrentCode, currentDiff, setCurrentDiff, setCodeInspect}) {
+function CodeSpace({ currentCode, setCurrentCode, currentDiff, setCurrentDiff, setCodeInspect, setCodeInspectIsLoading}) {
 
   const [value, updateValue] = useState("");
   const [jsvalue, updatejsValue] = useState("");
@@ -29,7 +29,7 @@ function CodeSpace({ currentCode, setCurrentCode, currentDiff, setCurrentDiff, s
   }
 
   const callGpt = () => {
-    createCodeInspection(currentCode,setCodeInspect);
+    createCodeInspection(currentCode,setCodeInspect,setCodeInspectIsLoading);
   }
 
   useEffect(() => {
@@ -58,7 +58,6 @@ function CodeSpace({ currentCode, setCurrentCode, currentDiff, setCurrentDiff, s
         Git diff
       </button>
 
-        {/* <button onClick={openModal}>Git Diff</button> */}
       
       <Modal open={modalOpen} close={closeModal} header="Git Diff">
       <div className="playground">
