@@ -4,7 +4,7 @@ import CodeInspectDiv from './CodeInspectDiv';
 import PseudoCodeDiv  from './PseudoCodeDiv';
 import FlowChartDiv from './FlowChartDiv'
 
-function MenuContainer({ curMenu, setCurMenu }) {
+function MenuContainer({ curMenu, setCurMenu,codeInspect,isCodeInspectLoading,setCodeInspectIsLoading }) {
 
   return (
     <div className="MenuContainer">
@@ -12,7 +12,11 @@ function MenuContainer({ curMenu, setCurMenu }) {
         curMenu={curMenu}
         operation="code-inspection"
         setCurMenu={setCurMenu}
-      ><CodeInspectDiv/></MenuDiv>
+      ><CodeInspectDiv
+       codeInspect={codeInspect}
+       isCodeInspectLoading={isCodeInspectLoading}
+       setCodeInspectIsLoading={setCodeInspectIsLoading}
+        /></MenuDiv>
       <MenuDiv
         curMenu={curMenu}
         operation="flow-chart"

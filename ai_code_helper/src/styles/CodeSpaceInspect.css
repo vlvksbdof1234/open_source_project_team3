@@ -1,17 +1,7 @@
-body {
-    margin: 0px;
-    background: lightgray;
-    user-select: none;
-}
 
 
-
-.codeSpace {
-    width: 45%;
-    height: 30em;
-    margin: 0px 15px;
-    border-radius: 4px;
-    background-color: black;
+.codeInspect {
+    color: white;
     
 }
 

@@ -1,9 +1,54 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import ReadOnlyEditor from "./ReadOnlyEditor";
+// import JsxParser from 'react-jsx-parser';
+import "./../styles/CodeSpaceInspect.css";
 
-export const CodeInspectDiv = () => {
-  // 여기에서 작업 
+
+
+export const CodeInspectDiv = ({codeInspect,isCodeInspectLoading,setCodeInspectIsLoading}) => {
+  
+  const [codeInspectJson, setCodeInspectJson] = useState("");
+  const [isError, setIsError] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+    if(codeInspect) {
+      try{
+        console.log(JSON.parse(codeInspect));
+        setIsError(false);
+        setCodeInspectJson(JSON.parse(codeInspect).context);
+        setCodeInspectIsLoading(false);
+      }
+      catch(err){ 
+        console.log(err);
+        setIsError(true);
+        setCodeInspectIsLoading(false);
+        
+      }
+    }
+  }, [codeInspect]);
+
+  useEffect(() => {
+    console.log(codeInspect);
+    if(isError) {
+      setCodeInspectJson("");
+      }
+  }, [isError]);
+
+  
+
+
   return (
-    <div>CodeInspectDiv</div>
+    <div id="codeInspect" className='codeInspect'>
+      {codeInspectJson ? (
+      <>
+      {codeInspectJson.map(p =>{
+          
+          return <><ReadOnlyEditor currentCode={p.main_code_by_function}></ReadOnlyEditor><h3>함수 명 : ${p.function_name} + 코드별 분석 : ${p.code_analysis_by_function}</h3></>;
+      })}
+      </>):""}
+      {isError ? (<h1>ERROR</h1>):""}
+      {isCodeInspectLoading ? (<h1>LOADING</h1>):""}
+    </div>
   )
 }
 
