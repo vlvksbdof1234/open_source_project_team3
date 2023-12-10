@@ -1,7 +1,7 @@
 // 설정 값을 가져와서
 import OpenAI from "openai";
 // chatgpt api를 사용한다.
-const apiKey = process.env.REACT_APP_OPENAI_API_KEY;
+const apiKey = process.env.REACT_APP_API_KEY;
 // api key를 가져옴
 const model = "gpt-3.5-turbo";
 // 사용 하는 모델 지정
@@ -61,18 +61,7 @@ export const createFlowChartMermaid = async (
     ],
     model: model,
   });
-  console.log(
-    res.choices[0]["message"]["content"]
-      .replaceAll("```", "")
-      .replaceAll("mermaid", "")
-  );
   setMermaidCode(
-    res.choices[0]["message"]["content"]
-      .replaceAll("```", "")
-      .replaceAll("mermaid", "")
-  );
-
-  setRenderedMermaidCode(
     res.choices[0]["message"]["content"]
       .replaceAll("```", "")
       .replaceAll("mermaid", "")

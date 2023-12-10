@@ -5,7 +5,7 @@ import "./../styles/CodeSpace.css";
 import Modal from "../components/Modal"
 
 
-function CodeSpace({ curCode, setcurCode, currentDiff, setCurrentDiff}) {
+function CodeSpace({curCode, setcurCode, currentDiff, setCurrentDiff}) {
 
   const [value, updateValue] = useState("");
   const [jsvalue, updatejsValue] = useState("");

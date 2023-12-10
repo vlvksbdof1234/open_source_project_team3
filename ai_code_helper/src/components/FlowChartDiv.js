@@ -13,7 +13,7 @@ export const FlowChartDiv = ({ curCode }) => {
     B-->D;
     C-->D;
   `;
-  const [showMermaid, setShowMermaid] = useState(false);
+  const [mermaidVisible, setMermaidVisible] = useState("hidden");
   const [mermaidCode, setMermaidCode] = useState(initialMermaidCode);
   const [renderedMermaidCode, setRenderedMermaidCode] =
     useState(initialMermaidCode);
@@ -26,6 +26,7 @@ export const FlowChartDiv = ({ curCode }) => {
   const [isEditOpen, setEditIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [generate, setGenerate] = useState(false);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -39,7 +40,8 @@ export const FlowChartDiv = ({ curCode }) => {
   };
 
   const renderMermaid = () => {
-    mermaid.initialize({ startOnLoad: false });
+    console.log("현재 렌더링 대상: " + renderedMermaidCode);
+    mermaid.initialize({ startOnLoad: true });
     const mermaidElement = document.getElementById("mermaid-diagram");
 
     // mermaid-diagram 요소가 존재하지 않으면 함수를 종료합니다.
@@ -59,8 +61,7 @@ export const FlowChartDiv = ({ curCode }) => {
   };
 
   const resetChanges = () => {
-    setMermaidCode(initialMermaidCode);
-    setRenderedMermaidCode(initialMermaidCode);
+    setMermaidCode(renderedMermaidCode);
   };
 
   const toggleSettings = () => {
@@ -97,11 +98,15 @@ export const FlowChartDiv = ({ curCode }) => {
     renderMermaid();
   }, [renderedMermaidCode]);
 
+  useEffect(() => {
+    applyChanges();
+  }, [generate]);
 
   const handleClick = async () => {
     setShowSettings(false);
     setIsLoading(true);
-    setShowMermaid(false);
+    setMermaidVisible("hidden");
+    setGenerate(false);
     await createFlowChartMermaid(
       curCode,
       query,
@@ -110,11 +115,11 @@ export const FlowChartDiv = ({ curCode }) => {
       setIsLoading,
       setMermaidCode,
       setRenderedMermaidCode,
-      setShowMermaid
+      setMermaidVisible
     );
-    // setMermaidCode()
     setIsLoading(false);
-    setShowMermaid(true);
+    setMermaidVisible("visible");
+    setGenerate(true);
   };
 
   return (
@@ -127,93 +132,92 @@ export const FlowChartDiv = ({ curCode }) => {
           onChange={(e) => setQuery(e.target.value)}
         />
         <button onClick={handleClick}>Generate</button>
+        <button className="settingButton" onClick={toggleSettings}>
+          <img className="settingImg" alt="settingLogo.png" src={logo} />
+        </button>
       </div>
+
+      {showSettings && (
+          <div className="diagram-setting">
+            <div className="complex-setting">
+              <div className="content-config">
+                <label>
+                  <input
+                    type="radio"
+                    name="detailLevel"
+                    value="basic"
+                    checked={tempDetailLevel === "basic"}
+                    onChange={() => setTempDetailLevel("basic")}
+                  />{" "}
+                  단순
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="detailLevel"
+                    value="basic"
+                    checked={tempDetailLevel === "basic"}
+                    onChange={() => setTempDetailLevel("basic")}
+                  />{" "}
+                  기본
+                </label>
+                <label>
+                  <input
+                    type="radio"
+                    name="detailLevel"
+                    value="advanced"
+                    checked={tempDetailLevel === "advanced"}
+                    onChange={() => setTempDetailLevel("advanced")}
+                  />{" "}
+                  복잡
+                </label>
+              </div>
+              <select
+                value={tempLanguage}
+                onChange={(e) => setTempLanguage(e.target.value)}
+              >
+                <option value="English">영어</option>
+                <option value="Korean">한국어</option>
+              </select>
+            </div>
+            <div className="config-button">
+              <button onClick={applySettingChanges}>설정 적용</button>
+              <button onClick={cancelSettingChanges}>설정 취소</button>
+            </div>
+          </div>
+        )}
 
       {isLoading && <LoadingSpinner />}
 
-      {showMermaid && (
-        <div className="mermaid-container">
-          <div
-            className={`mermaid ${isModalOpen ? "modal" : ""}`}
-            onClick={toggleModal}
-            id="mermaid-diagram"
-          >
-            {renderedMermaidCode}
-          </div>
-          <div className="edit-config-buttons">
-            <button className="editButton" onClick={toggleEdit}>
-              View & Edit Code
-            </button>
-            <button className="settingButton" onClick={toggleSettings}>
-              <img className="settingImg" alt="settingLogo.png" src={logo} />
-            </button>
-          </div>
-
-          {showSettings && (
-            <div className="diagram-setting">
-              <div className="complex-setting">
-                <div className="content-config">
-                  <label>
-                    <input
-                      type="radio"
-                      name="detailLevel"
-                      value="basic"
-                      checked={tempDetailLevel === "basic"}
-                      onChange={() => setTempDetailLevel("basic")}
-                    />{" "}
-                    단순
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="detailLevel"
-                      value="basic"
-                      checked={tempDetailLevel === "basic"}
-                      onChange={() => setTempDetailLevel("basic")}
-                    />{" "}
-                    기본
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="detailLevel"
-                      value="advanced"
-                      checked={tempDetailLevel === "advanced"}
-                      onChange={() => setTempDetailLevel("advanced")}
-                    />{" "}
-                    복잡
-                  </label>
-                </div>
-                <select
-                  value={tempLanguage}
-                  onChange={(e) => setTempLanguage(e.target.value)}
-                >
-                  <option value="English">영어</option>
-                  <option value="Korean">한국어</option>
-                </select>
-              </div>
-              <div className="config-button">
-                <button onClick={applySettingChanges}>설정 적용</button>
-                <button onClick={cancelSettingChanges}>설정 취소</button>
-              </div>
-            </div>
-          )}
-          {isEditOpen && (
-            <div className="mermaid-editor">
-              <textarea
-                value={mermaidCode}
-                onChange={(e) => setMermaidCode(e.target.value)}
-              />
-              <div className="edit-button-container">
-                <button onClick={applyChanges}>적용</button>
-                <button onClick={resetChanges}>초기화</button>
-              </div>
-            </div>
-          )}
-
-          {isModalOpen && <div className="modal-backdrop"></div>}
+      <div className={`mermaid-container ${mermaidVisible}`}>
+        <div
+          className={`mermaid ${isModalOpen ? "modal" : ""}`}
+          onClick={toggleModal}
+          id="mermaid-diagram"
+        >
+          {renderedMermaidCode}
         </div>
-      )}
+
+        <button className="editButton" onClick={toggleEdit}>
+          View & Edit Code
+        </button>
+
+        
+        {isEditOpen && (
+          <div className="mermaid-editor">
+            <textarea
+              value={mermaidCode}
+              onChange={(e) => setMermaidCode(e.target.value)}
+            />
+            <div className="edit-button-container">
+              <button onClick={applyChanges}>적용</button>
+              <button onClick={resetChanges}>초기화</button>
+            </div>
+          </div>
+        )}
+
+        {isModalOpen && <div className="modal-backdrop"></div>}
+      </div>
     </div>
   );
 };
