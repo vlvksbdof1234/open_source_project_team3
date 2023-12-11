@@ -68,15 +68,66 @@ export const createFlowChartMermaid = async (
   );
 };
 
-// setRenderedMermaidCode(
-//   res.choices[0]["message"]["content"]
-//     .replaceAll("```", "")
-//     .replaceAll("mermaid", "")
-// );
+export const createPseudoCode = async (
+  code,
+  query,
+  complexity,
+  language,
+  setIsLoading,
+  setPseudoCode
+) => {
+  let prompt = `
+  You are a helper for web applications. Your task is to create a Pseudo code based on the code and additional requirements.
+  Here are the 10 rule you should follow 
+  1. Read ${code} and write a Pseudocode about ${query}. Remember, the Pseudo code should reflect the logic or function of the input code, so it must be based on the provided code.
+  2. PseudoCode should be ${complexity}
+    1) simple: Max number of Line < 8 
+    2) basic: Max number of Line < 20
+    3) advanced: 23 < Max number of Line 
+  3. PseudoCode in the language ${language}.
+  4. Important! Provide only the pseudo code in your answer. Do not say anything else apart from the code. 
+  5. Strictly adhere to rule 4. 
+  6. Use appropriate naming conventions. The human tendency follows the approach to follow what we see. If a programmer goes through a pseudo code, his approach will be the same as per it, so the naming must be simple and distinct.
+  7.Elaborate everything which is going to happen in the actual code. Don’t make the pseudo code abstract.
+  8. Use standard programming structures such as ‘if-then’, ‘for’, ‘while’, ‘cases’ the way we use it in programming.
+  9. Check whether all the sections of a pseudo code is complete, finite and clear to understand and comprehend.
+  10. Don’t write the pseudo code in a complete programmatic manner. It is necessary to be simple to understand even for a layman or client, hence don’t incorporate too many technical terms.
+  Your answers show look like this
+  ======================
+  FUNCTION kruskal(graph)
+  SET edges as an empty array
 
-// const createPseudoMermaid = (code, query, complexity, language) => {
+  FOR each key-value pair [u, neighbors] in graph
+    FOR each key-value pair [v, weight] in neighbors
+      APPEND [parseInt(u), parseInt(v), weight] to edges
+    END FOR
+  END FOR
 
-//     prompt = `${code} 를 읽고 ${query}에 대한 PseudoCode를 mermaid 코드를 작성해줘. 복잡한 정도를 simple, normal, specific 로 나눴을 때, ${complexity} 만큼 상세하게 작성하고, 언어는 ${language}로 작성해줘`
+  FOR each [u, v, weight] in edges
+    IF unionFind.find(u) is not equal to unionFind.find(v) THEN
+      APPEND [u, v, weight] to mst
+      unionFind.union(u, v)
+    END IF
+  END FOR
 
-//     return pseudoCode;
-// }
+  RETURN mst
+  END FUNCTION
+  ========================
+  Don't include something like "Note! ~~~" Only give me the PSEUDO CODE!!
+  `;
+
+  const res = await open_ai.chat.completions.create({
+    messages: [
+      { role: "system", content: "You Obey my rule as a expert in code" },
+      { role: "user", content: prompt },
+    ],
+    model: model,
+  });
+  setPseudoCode(
+    res.choices[0]["message"]["content"]
+      .replaceAll("```", "")
+      .replaceAll("PseudoCode", "")
+  );
+  // setPseudoCode(
+  // );
+};

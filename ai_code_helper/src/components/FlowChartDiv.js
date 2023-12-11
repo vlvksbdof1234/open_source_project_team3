@@ -6,13 +6,7 @@ import { createFlowChartMermaid } from "../apiService";
 import LoadingSpinner from "./LoadingSpinner";
 
 export const FlowChartDiv = ({ curCode }) => {
-  const initialMermaidCode = `
-    graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
-  `;
+  const initialMermaidCode = ``;
   const [mermaidVisible, setMermaidVisible] = useState("hidden");
   const [mermaidCode, setMermaidCode] = useState(initialMermaidCode);
   const [renderedMermaidCode, setRenderedMermaidCode] =
@@ -145,9 +139,9 @@ export const FlowChartDiv = ({ curCode }) => {
                   <input
                     type="radio"
                     name="detailLevel"
-                    value="basic"
-                    checked={tempDetailLevel === "basic"}
-                    onChange={() => setTempDetailLevel("basic")}
+                    value="simple"
+                    checked={tempDetailLevel === "simple"}
+                    onChange={() => setTempDetailLevel("simple")}
                   />{" "}
                   단순
                 </label>

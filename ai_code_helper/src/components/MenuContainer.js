@@ -22,7 +22,7 @@ function MenuContainer({ curMenu, setCurMenu, curCode }) {
         curMenu={curMenu}
         operation="pseudo-code"
         setCurMenu={setCurMenu}
-      ><PseudoCodeDiv/></MenuDiv>
+      ><PseudoCodeDiv curCode={curCode}/></MenuDiv>
     </div>
   );
 }

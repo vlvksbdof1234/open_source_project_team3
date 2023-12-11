@@ -107,6 +107,7 @@ h1 {
   margin-top:0;
   /* 에디터 너비 조정 */
   height: 400px;
+  margin-bottom:20px;
   /* 에디터 높이 조정 */
   border: none;
   overflow: scroll;
