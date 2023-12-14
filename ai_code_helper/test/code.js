@@ -1,603 +1,326 @@
 //입력받은 코드 (분석할 코드)
-var curCode = `
+var currentCode = `
 "
-leaf = function () {
-    this.keyval = [];
-    this.recnum = [];
-    this.prevLf = null;
-    this.nextLf = null;};
- 
- node = function () {
-    this.keyval = [];
-    this.nodptr = [];};
- 
- tree = function (order) {
-    // Private
-    this.root = new leaf();
-    this.maxkey = order-1;
-    this.minkyl = Math.floor(order/2);
-    this.minkyn = Math.floor(this.maxkey/2);
-    this.leaf = null;
-    this.item = -1;
-    // Public
-    this.keyval = '';
-    this.recnum = -1;
-    this.length = 0;
-    this.eof = true;
-    this.found = false;};
- 
- 
- // ========== Method prototypes ==========
- 
- // ---------- Leaf nodes ----------
- 
- leaf.prototype.isLeaf = function() {return true;};
- 
- leaf.prototype.getItem = function (key,near) {
-    var vals = this.keyval;
-    if (near) {
-       for (var i=0, len=vals.length; i<len; i++) {
-          if (key <= vals[i]) return i;
-       }
-    } else {
-       for (var i=0, len=vals.length; i<len; i++) {
-          if (key === vals[i]) return i;
-       }
-    }
-    return -1;
- };
- 
- leaf.prototype.addKey = function (key,rec) {
-    var vals = this.keyval;
-    var itm = vals.length;
-    for (var i=0, len=itm; i<len; i++) {
-       if (key === vals[i]) {
-          itm = -1;
-          break;
-       }
-       if (key <= vals[i]) {
-          itm = i;
-          break;
-       }
-    }
-    if (itm != -1) {
-       for (var i=vals.length; i>itm; i--) {
-          vals[i] = vals[i-1];
-          this.recnum[i] = this.recnum[i-1];
-       }
-       vals[itm] = key;
-       this.recnum[itm] = rec;
-    }
-    return itm;
- };
- 
- leaf.prototype.split = function () {
-    var mov = Math.floor(this.keyval.length/2);
-    var newL = new leaf();
-    for (var i=mov-1; i>=0; i--) {
-       newL.keyval[i] = this.keyval.pop();
-       newL.recnum[i] = this.recnum.pop();
-    }
-    newL.prevLf = this;
-    newL.nextLf = this.nextLf;
-    if (this.nextLf !== null) this.nextLf.prevLf = newL;
-    this.nextLf = newL;
-    return newL;
- };
- 
- leaf.prototype.merge = function (frNod, paNod, frKey) {
-    for (var i=0, len=frNod.keyval.length; i<len; i++) {
-       this.keyval.push(frNod.keyval[i]);
-       this.recnum.push(frNod.recnum[i]);
-    }
-    this.nextLf = frNod.nextLf;
-    if (frNod.nextLf !== null) frNod.nextLf.prevLf = this;
-    frNod.prevLf = null;
-    frNod.nextLf = null;
-    var itm = paNod.keyval.length-1;
-    for (var i=itm; i>=0; i--) {
-       if (paNod.keyval[i] == frKey) {
-          itm = i;
-          break;
-       }
-    }
-    for (var i=itm, len=paNod.keyval.length-1; i<len; i++) {
-       paNod.keyval[i] = paNod.keyval[i+1];
-       paNod.nodptr[i+1] = paNod.nodptr[i+2];
-    }
-    paNod.keyval.pop();
-    paNod.nodptr.pop();
- };
- 
- 
- // ---------- Internal nodes ----------
- 
- node.prototype.isLeaf = function() {return false;};
- 
- node.prototype.getItem = function (key) {
-    var vals = this.keyval;
-    for (var i=0, len=vals.length; i<len; i++) {
-       if (key < vals[i]) return i;
-    }
-    return vals.length;
- };
- 
- node.prototype.addKey = function (key,ptrL,ptrR) {
-    var vals = this.keyval;
-    var itm = vals.length;
-    for (var i=0, len=vals.length; i<len; i++) {
-       if (key <= vals[i]) {
-          itm = i;
-          break;
-       }
-    }
-    for (var i=vals.length; i>itm; i--) {
-       vals[i] = vals[i-1];
-       this.nodptr[i+1] = this.nodptr[i];
-    }
-    vals[itm] = key;
-    this.nodptr[itm] = ptrL;
-    this.nodptr[itm+1] = ptrR;
- };
- 
- node.prototype.split = function () {
-    var mov = Math.ceil(this.keyval.length/2) - 1;
-    var newN = new node();
-    newN.nodptr[mov] = this.nodptr.pop();
-    for (var i=mov-1; i>=0; i--) {
-       newN.keyval[i] = this.keyval.pop();
-       newN.nodptr[i] = this.nodptr.pop();
-    }
-    return newN;
- };
- 
- node.prototype.merge = function (frNod, paNod, paItm) {
-    var del = paNod.keyval[paItm];
-    this.keyval.push(del);
-    for (var i=0, len=frNod.keyval.length; i<len; i++) {
-       this.keyval.push(frNod.keyval[i]);
-       this.nodptr.push(frNod.nodptr[i]);
-    }
-    this.nodptr.push(frNod.nodptr[frNod.nodptr.length-1]);
-    for (var i=paItm, len=paNod.keyval.length-1; i<len; i++) {
-       paNod.keyval[i] = paNod.keyval[i+1];
-       paNod.nodptr[i+1] = paNod.nodptr[i+2];
-    }
-    paNod.keyval.pop();
-    paNod.nodptr.pop();
-    return del;
- };
- 
- 
- // ---------- B+ Tree ----------
- 
- tree.prototype.insert = function (key,rec) {
-    var stack = [];
-    this.leaf = this.root;
-    while (!this.leaf.isLeaf()) {
-       stack.push(this.leaf);
-       this.item = this.leaf.getItem(key);
-       this.leaf = this.leaf.nodptr[this.item];
-    }
-    this.item = this.leaf.addKey(key,rec);
-    this.keyval = key;
-    this.eof = false;
-    if (this.item === -1) {
-       this.found = true;
-       this.item = this.leaf.getItem(key,false);
-       this.recnum = this.leaf.recnum[this.item];
-    } else {
-       this.found = false;
-       this.recnum = rec;
-       this.length++;
-       if (this.leaf.keyval.length > this.maxkey) {
-          var pL = this.leaf;
-          var pR = this.leaf.split();
-          var ky = pR.keyval[0];
-          this.item = this.leaf.getItem(key,false);
-          if (this.item === -1) {
-             this.leaf = this.leaf.nextLf;
-             this.item = this.leaf.getItem(key,false);
-          }
-          while (true) {
-             if (stack.length === 0) {
-                var newN = new node();
-                newN.keyval[0] = ky;
-                newN.nodptr[0] = pL;
-                newN.nodptr[1] = pR;
-                this.root = newN;
-                break;
-             }
-             var nod = stack.pop();
-             nod.addKey(ky,pL,pR);
-             if (nod.keyval.length <= this.maxkey) break;
-             pL = nod;
-             pR = nod.split();
-             ky = nod.keyval.pop();
-          }
-       }
-    }
-    return (!this.found);
- };
- 
- tree.prototype.remove = function (key) {
-    if (typeof key == 'undefined') {
-       if (this.item === -1) {
-          this.eof = true;
-          this.found = false;
-          return false;
-       }
-       key = this.leaf.keyval[this.item];
-    }
-    this._del(key);
-    if (!this.found) {
-       this.item = -1;
-       this.eof = true;
-       this.keyval = '';
-       this.recnum = -1;
-    } else {
-       this.seek(key,true);
-       this.found = true;
-    }
-    return (this.found);
- };
- 
- tree.prototype.seek = function (key,near) {
-    if (typeof near != 'boolean') near = false;
-    this.leaf = this.root;
-    while (!this.leaf.isLeaf()) {
-       this.item = this.leaf.getItem(key);
-       this.leaf = this.leaf.nodptr[this.item];
-    }
-    this.item = this.leaf.getItem(key,near);
-    if (near && this.item ==-1 && this.leaf.nextLf!==null) {
-       this.leaf = this.leaf.nextLf;
-       this.item = 0;
-    }
-    if (this.item === -1) {
-       this.eof = true;
-       this.keyval = '';
-       this.found = false;
-       this.recnum = -1;
-    } else {
-       this.eof = false;
-       this.found = (this.leaf.keyval[this.item] === key);
-       this.keyval = this.leaf.keyval[this.item];
-       this.recnum = this.leaf.recnum[this.item];
-    }
-    return (!this.eof);
- };
- 
- tree.prototype.skip = function (cnt) {
-    if (typeof cnt != 'number') cnt = 1;
-    if (this.item==-1 || this.leaf===null) this.eof = true;
-    if (cnt > 0) {
-       while (!this.eof && this.leaf.keyval.length - this.item - 1 < cnt) {
-          cnt = cnt - this.leaf.keyval.length + this.item;
-          this.leaf = this.leaf.nextLf;
-          if (this.leaf === null) this.eof = true;
-          else                    this.item = 0;
-       }
-       if (!this.eof) this.item = this.item + cnt;
-    } else {
-       cnt = -cnt;
-       while (!this.eof && this.item < cnt) {
-          cnt = cnt - this.item - 1;
-          this.leaf = this.leaf.prevLf;
-          if (this.leaf === null) this.eof = true;
-          else                    this.item = this.leaf.keyval.length-1;
-       }
-       if (!this.eof) this.item = this.item - cnt;
-    }
-    if (this.eof) {
-       this.item = -1;
-       this.found = false;
-       this.keyval = '';
-       this.recnum = -1;
-    } else {
-       this.found = true;
-       this.keyval = this.leaf.keyval[this.item];
-       this.recnum = this.leaf.recnum[this.item];
-    }
-    return (this.found);
- };
- 
- tree.prototype.goto = function (cnt) {
-    if (cnt < 0) {
-       this.goBottom();
-       if (!this.eof) this.skip(cnt+1);
-    } else {
-       this.goTop();
-       if (!this.eof) this.skip(cnt-1);
-    }
-    return (this.found);
- };
- 
- tree.prototype.keynum = function () {
-    if (this.leaf === null || this.item === -1) return -1;
-    var cnt = this.item + 1;
-    var ptr = this.leaf;
-    while (ptr.prevLf !== null) {
-       ptr = ptr.prevLf;
-       cnt += ptr.keyval.length;
-    }
-    return cnt;
- };
- 
- tree.prototype.goTop = function () {
-    this.leaf = this.root;
-    while (!this.leaf.isLeaf()) {
-       this.leaf = this.leaf.nodptr[0];
-    }
-    if (this.leaf.keyval.length === 0) {
-       this.item = -1;
-       this.eof = true;
-       this.found = false;
-       this.keyval = '';
-       this.recnum = -1;
-    } else {
-       this.item = 0;
-       this.eof = false;
-       this.found = true;
-       this.keyval = this.leaf.keyval[0];
-       this.recnum = this.leaf.recnum[0];
-    }
-    return (this.found);
- };
- 
- tree.prototype.goBottom = function () {
-    this.leaf = this.root;
-    while (!this.leaf.isLeaf()) {
-       this.leaf = this.leaf.nodptr[this.leaf.nodptr.length-1];
-    }
-    if (this.leaf.keyval.length === 0) {
-       this.item = -1;
-       this.eof = true;
-       this.found = false;
-       this.keyval = '';
-       this.recnum = -1;
-    } else {
-       this.item = this.leaf.keyval.length-1;
-       this.eof = false;
-       this.found = true;
-       this.keyval = this.leaf.keyval[this.item];
-       this.recnum = this.leaf.recnum[this.item];
-    }
-    return (this.found);
- };
- 
- tree.prototype.pack = function () {
-    this.goTop(0);
-    if (this.leaf == this.root) return;
- 
-    // Pack leaves
-    var toN = new leaf();
-    var toI = 0;
-    var frN = this.leaf;
-    var frI = 0;
-    var parKey = [];
-    var parNod = [];
-    while (true) {
-       toN.keyval[toI] = frN.keyval[frI];
-       toN.recnum[toI] = frN.recnum[frI];
-       if (toI === 0) parNod.push(toN);
-       if (frI == frN.keyval.length-1) {
-          if (frN.nextLf === null) break;
-          frN = frN.nextLf;
-          frI = 0;
-       } else {
-          frI++;
-       }
-       if (toI == this.maxkey-1) {
-          var tmp = new leaf();
-          toN.nextLf = tmp;
-          tmp.prevLf = toN;
-          toN = tmp;
-          toI = 0;
-       } else {
-          toI++;
-       }
-    }
-    var mov = this.minkyl - toN.keyval.length;
-    frN = toN.prevLf;
-    if (mov > 0 && frN !== null) {
-       for (var i=toN.keyval.length-1; i>=0; i--) {
-          toN.keyval[i+mov] = toN.keyval[i];
-          toN.recnum[i+mov] = toN.recnum[i];
-       }
-       for (var i=mov-1; i>=0; i--) {
-          toN.keyval[i] = frN.keyval.pop();
-          toN.recnum[i] = frN.recnum.pop();
-       }
-    }
-    for (i=1, len=parNod.length; i<len; i++) {
-       parKey.push(parNod[i].keyval[0]);
-    }
-    parKey[parKey.length] = null;
- 
-    // Rebuild nodes
-    var kidKey, kidNod;
-    while (parKey[0] !== null) {
-       kidKey = parKey;
-       kidNod = parNod;
-       parKey = [];
-       parNod = [];
-       var toI = this.maxkey+1;
-       for (var i=0, len=kidKey.length; i<len; i++) {
-          if (toI > this.maxkey) {
-             toN = new node();
-             toI = 0;
-             parNod.push(toN);
-          }
-          toN.keyval[toI] = kidKey[i];
-          toN.nodptr[toI] = kidNod[i];
-          toI++;
-       }
-       mov = this.minkyn - toN.keyval.length + 1;
-       if (mov > 0 && parNod.length > 1) {
-          for (var i=toN.keyval.length-1; i>=0; i--) {
-             toN.keyval[i+mov] = toN.keyval[i];
-             toN.nodptr[i+mov] = toN.nodptr[i];
-          }
-          frN = parNod[parNod.length-2];
-          for (var i=mov-1; i>=0; i--) {
-             toN.keyval[i] = frN.keyval.pop();
-             toN.nodptr[i] = frN.nodptr.pop();
-          }
-       }
-       for (var i=0, len=parNod.length; i<len; i++) {
-          parKey.push(parNod[i].keyval.pop());
-       }
-    }
-    this.root = parNod[0];
-    this.goTop();
-    return (this.found);
- };
- 
- 
- // ----- Deletion methods -----
- 
- tree.prototype._del = function (key) {
-    var stack = [];
-    var parNod = null;
-    var parPtr = -1;
-    this.leaf = this.root;
-    while (!this.leaf.isLeaf()) {
-       stack.push(this.leaf);
-       parNod = this.leaf;
-       parPtr = this.leaf.getItem(key);
-       this.leaf = this.leaf.nodptr[parPtr];
-    }
-    this.item = this.leaf.getItem(key,false);
- 
-    // Key not in tree
-    if (this.item === -1) {
-       this.found = false;
-       return;
-    }
-    this.found = true;
- 
-    // Delete key from leaf
-    for (var i=this.item, len=this.leaf.keyval.length-1; i<len; i++) {
-       this.leaf.keyval[i] = this.leaf.keyval[i+1];
-       this.leaf.recnum[i] = this.leaf.recnum[i+1];
-    }
-    this.leaf.keyval.pop();
-    this.leaf.recnum.pop();
-    this.length--;
- 
-    // Leaf still valid: done
-    if (this.leaf == this.root) return;
-    if (this.leaf.keyval.length >= this.minkyl) {
-       if (this.item === 0) this._fixNodes(stack, key, this.leaf.keyval[0]);
-       return;
-    }
-    var delKey;
- 
-    // Steal from left sibling if possible
-    var sibL = (parPtr === 0) ? null : parNod.nodptr[parPtr-1];
-    if (sibL !== null && sibL.keyval.length > this.minkyl) {
-       delKey = (this.item === 0) ? key : this.leaf.keyval[0];
-       for (var i=this.leaf.keyval.length; i>0; i--) {
-          this.leaf.keyval[i] = this.leaf.keyval[i-1];
-          this.leaf.recnum[i] = this.leaf.recnum[i-1];
-       }
-       this.leaf.keyval[0] = sibL.keyval.pop();
-       this.leaf.recnum[0] = sibL.recnum.pop();
-       this._fixNodes(stack, delKey, this.leaf.keyval[0]);
-       return;
-    }
- 
-    // Steal from right sibling if possible
-    var sibR = (parPtr == parNod.keyval.length) ? null : parNod.nodptr[parPtr+1];
-    if (sibR !== null && sibR.keyval.length > this.minkyl) {
-       this.leaf.keyval.push(sibR.keyval.shift());
-       this.leaf.recnum.push(sibR.recnum.shift());
-       if (this.item === 0) this._fixNodes(stack, key, this.leaf.keyval[0]);
-       this._fixNodes(stack, this.leaf.keyval[this.leaf.keyval.length-1], sibR.keyval[0]);
-       return;
-    }
- 
-    // Merge left to make one leaf
-    if (sibL !== null) {
-       delKey = (this.item === 0) ? key : this.leaf.keyval[0];
-       sibL.merge(this.leaf, parNod, delKey);
-       this.leaf = sibL;
-    } else {
-       delKey = sibR.keyval[0];
-       this.leaf.merge(sibR, parNod, delKey);
-       if (this.item === 0) this._fixNodes(stack, key, this.leaf.keyval[0]);
-    }
- 
-    if (stack.length === 1 && parNod.keyval.length === 0) {
-       this.root = this.leaf;
-       return;
-    }
- 
-    var curNod = stack.pop();
-    var parItm;
- 
-    // Update all nodes
-    while (curNod.keyval.length < this.minkyn && stack.length > 0) {
- 
-       parNod = stack.pop();
-       parItm = parNod.getItem(delKey);
- 
-       // Steal from right sibling if possible
-       sibR = (parItm == parNod.keyval.length) ? null : parNod.nodptr[parItm+1];
-       if (sibR !== null && sibR.keyval.length > this.minkyn) {
-          curNod.keyval.push(parNod.keyval[parItm]);
-          parNod.keyval[parItm] = sibR.keyval.shift();
-          curNod.nodptr.push(sibR.nodptr.shift());
-          break;
-       }
- 
-       // Steal from left sibling if possible
-       sibL = (parItm === 0) ? null : parNod.nodptr[parItm-1];
-       if (sibL !== null && sibL.keyval.length > this.minkyn) {
-          for (var i=curNod.keyval.length; i>0; i--) {
-             curNod.keyval[i] = curNod.keyval[i-1];
-          }
-          for (var i=curNod.nodptr.length; i>0; i--) {
-             curNod.nodptr[i] = curNod.nodptr[i-1];
-          }
-          curNod.keyval[0] = parNod.keyval[parItm-1];
-          parNod.keyval[parItm-1] = sibL.keyval.pop();
-          curNod.nodptr[0] = sibL.nodptr.pop();
-          break;
-       }
- 
-       // Merge left to make one node
-       if (sibL !== null) {
-          delKey = sibL.merge(curNod, parNod, parItm-1);
-          curNod = sibL;
-       } else if (sibR !== null) {
-          delKey = curNod.merge(sibR, parNod, parItm);
-       }
- 
-       // Next level
-       if (stack.length === 0 && parNod.keyval.length === 0) {
-          this.root = curNod;
-          break;
-       }
-       curNod = parNod;
-    }
- };
- 
- tree.prototype._fixNodes = function (stk, frKey, toKey) {
-    var vals, lvl=stk.length, mor=true;
-    do {
-       lvl--;
-       vals = stk[lvl].keyval;
-       for (var i=vals.length-1; i>=0; i--) {
-          if (vals[i] == frKey) {
-             vals[i] = toKey;
-             mor = false;
-             break;
-          }
-       }
-    } while (mor && lvl>0);
- };`
+1. import java.awt.*;  
+2. import java.awt.event.*;  
+3. /*********************************************/  
+4.   
+5. public class MyCalculator extends Frame  
+6. {  
+7.   
+8. public boolean setClear=true;  
+9. double number, memValue;  
+10. char op;  
+11.   
+12. String digitButtonText[] = {"7", "8", "9", "4", "5", "6", "1", "2", "3", "0", "+/-", "." };  
+13. String operatorButtonText[] = {"/", "sqrt", "*", "%", "-", "1/X", "+", "=" };  
+14. String memoryButtonText[] = {"MC", "MR", "MS", "M+" };  
+15. String specialButtonText[] = {"Backspc", "C", "CE" };  
+16.   
+17. MyDigitButton digitButton[]=new MyDigitButton[digitButtonText.length];  
+18. MyOperatorButton operatorButton[]=new MyOperatorButton[operatorButtonText.length];  
+19. MyMemoryButton memoryButton[]=new MyMemoryButton[memoryButtonText.length];  
+20. MySpecialButton specialButton[]=new MySpecialButton[specialButtonText.length];  
+21.   
+22. Label displayLabel=new Label("0",Label.RIGHT);  
+23. Label memLabel=new Label(" ",Label.RIGHT);  
+24.   
+25. final int FRAME_WIDTH=325,FRAME_HEIGHT=325;  
+26. final int HEIGHT=30, WIDTH=30, H_SPACE=10,V_SPACE=10;  
+27. final int TOPX=30, TOPY=50;  
+28. ///////////////////////////  
+29. MyCalculator(String frameText)//constructor  
+30. {  
+31. super(frameText);  
+32.   
+33. int tempX=TOPX, y=TOPY;  
+34. displayLabel.setBounds(tempX,y,240,HEIGHT);  
+35. displayLabel.setBackground(Color.BLUE);  
+36. displayLabel.setForeground(Color.WHITE);  
+37. add(displayLabel);  
+38.   
+39. memLabel.setBounds(TOPX,  TOPY+HEIGHT+ V_SPACE,WIDTH, HEIGHT);  
+40. add(memLabel);  
+41.   
+42. // set Co-ordinates for Memory Buttons  
+43. tempX=TOPX;   
+44. y=TOPY+2*(HEIGHT+V_SPACE);  
+45. for(int i=0; i<memoryButton.length; i++)  
+46. {  
+47. memoryButton[i]=new MyMemoryButton(tempX,y,WIDTH,HEIGHT,memoryButtonText[i], this);  
+48. memoryButton[i].setForeground(Color.RED);  
+49. y+=HEIGHT+V_SPACE;  
+50. }  
+51.   
+52. //set Co-ordinates for Special Buttons  
+53. tempX=TOPX+1*(WIDTH+H_SPACE); y=TOPY+1*(HEIGHT+V_SPACE);  
+54. for(int i=0;i<specialButton.length;i++)  
+55. {  
+56. specialButton[i]=new MySpecialButton(tempX,y,WIDTH*2,HEIGHT,specialButtonText[i], this);  
+57. specialButton[i].setForeground(Color.RED);  
+58. tempX=tempX+2*WIDTH+H_SPACE;  
+59. }  
+60.   
+61. //set Co-ordinates for Digit Buttons  
+62. int digitX=TOPX+WIDTH+H_SPACE;  
+63. int digitY=TOPY+2*(HEIGHT+V_SPACE);  
+64. tempX=digitX;  y=digitY;  
+65. for(int i=0;i<digitButton.length;i++)  
+66. {  
+67. digitButton[i]=new MyDigitButton(tempX,y,WIDTH,HEIGHT,digitButtonText[i], this);  
+68. digitButton[i].setForeground(Color.BLUE);  
+69. tempX+=WIDTH+H_SPACE;  
+70. if((i+1)%3==0){tempX=digitX; y+=HEIGHT+V_SPACE;}  
+71. }  
+72.   
+73. //set Co-ordinates for Operator Buttons  
+74. int opsX=digitX+2*(WIDTH+H_SPACE)+H_SPACE;  
+75. int opsY=digitY;  
+76. tempX=opsX;  y=opsY;  
+77. for(int i=0;i<operatorButton.length;i++)  
+78. {  
+79. tempX+=WIDTH+H_SPACE;  
+80. operatorButton[i]=new MyOperatorButton(tempX,y,WIDTH,HEIGHT,operatorButtonText[i], this);  
+81. operatorButton[i].setForeground(Color.RED);  
+82. if((i+1)%2==0){tempX=opsX; y+=HEIGHT+V_SPACE;}  
+83. }  
+84.   
+85. addWindowListener(new WindowAdapter()  
+86. {  
+87. public void windowClosing(WindowEvent ev)  
+88. {System.exit(0);}  
+89. });  
+90.   
+91. setLayout(null);  
+92. setSize(FRAME_WIDTH,FRAME_HEIGHT);  
+93. setVisible(true);  
+94. }  
+95. //////////////////////////////////  
+96. static String getFormattedText(double temp)  
+97. {  
+98. String resText=""+temp;  
+99. if(resText.lastIndexOf(".0")>0)  
+100.     resText=resText.substring(0,resText.length()-2);  
+101. return resText;  
+102. }  
+103. ////////////////////////////////////////  
+104. public static void main(String []args)  
+105. {  
+106. new MyCalculator("Calculator - JavaTpoint");  
+107. }  
+108. }  
+109.   
+110. /*******************************************/  
+111.   
+112. class MyDigitButton extends Button implements ActionListener  
+113. {  
+114. MyCalculator cl;  
+115.   
+116. //////////////////////////////////////////  
+117. MyDigitButton(int x,int y, int width,int height,String cap, MyCalculator clc)  
+118. {  
+119. super(cap);  
+120. setBounds(x,y,width,height);  
+121. this.cl=clc;  
+122. this.cl.add(this);  
+123. addActionListener(this);  
+124. }  
+125. ////////////////////////////////////////////////  
+126. static boolean isInString(String s, char ch)  
+127. {  
+128. for(int i=0; i<s.length();i++) if(s.charAt(i)==ch) return true;  
+129. return false;  
+130. }  
+131. /////////////////////////////////////////////////  
+132. public void actionPerformed(ActionEvent ev)  
+133. {  
+134. String tempText=((MyDigitButton)ev.getSource()).getLabel();  
+135.   
+136. if(tempText.equals("."))  
+137. {  
+138.  if(cl.setClear)   
+139.     {cl.displayLabel.setText("0.");cl.setClear=false;}  
+140.  else if(!isInString(cl.displayLabel.getText(),'.'))  
+141.     cl.displayLabel.setText(cl.displayLabel.getText()+".");  
+142.  return;  
+143. }  
+144.   
+145. int index=0;  
+146. try{  
+147.         index=Integer.parseInt(tempText);  
+148.     }catch(NumberFormatException e){return;}  
+149.   
+150. if (index==0 && cl.displayLabel.getText().equals("0")) return;  
+151.   
+152. if(cl.setClear)  
+153.             {cl.displayLabel.setText(""+index);cl.setClear=false;}  
+154. else  
+155.     cl.displayLabel.setText(cl.displayLabel.getText()+index);  
+156. }//actionPerformed  
+157. }//class defination  
+158.   
+159. /********************************************/  
+160.   
+161. class MyOperatorButton extends Button implements ActionListener  
+162. {  
+163. MyCalculator cl;  
+164.   
+165. MyOperatorButton(int x,int y, int width,int height,String cap, MyCalculator clc)  
+166. {  
+167. super(cap);  
+168. setBounds(x,y,width,height);  
+169. this.cl=clc;  
+170. this.cl.add(this);  
+171. addActionListener(this);  
+172. }  
+173. ///////////////////////  
+174. public void actionPerformed(ActionEvent ev)  
+175. {  
+176. String opText=((MyOperatorButton)ev.getSource()).getLabel();  
+177.   
+178. cl.setClear=true;  
+179. double temp=Double.parseDouble(cl.displayLabel.getText());  
+180.   
+181. if(opText.equals("1/x"))  
+182.     {  
+183.     try  
+184.         {double tempd=1/(double)temp;  
+185.         cl.displayLabel.setText(MyCalculator.getFormattedText(tempd));}  
+186.     catch(ArithmeticException excp)  
+187.                         {cl.displayLabel.setText("Divide by 0.");}  
+188.     return;  
+189.     }  
+190. if(opText.equals("sqrt"))  
+191.     {  
+192.     try  
+193.         {double tempd=Math.sqrt(temp);  
+194.         cl.displayLabel.setText(MyCalculator.getFormattedText(tempd));}  
+195.             catch(ArithmeticException excp)  
+196.                     {cl.displayLabel.setText("Divide by 0.");}  
+197.     return;  
+198.     }  
+199. if(!opText.equals("="))  
+200.     {  
+201.     cl.number=temp;  
+202.     cl.op=opText.charAt(0);  
+203.     return;  
+204.     }  
+205. // process = button pressed  
+206. switch(cl.op)  
+207. {  
+208. case '+':  
+209.     temp+=cl.number;break;  
+210. case '-':  
+211.     temp=cl.number-temp;break;  
+212. case '*':  
+213.     temp*=cl.number;break;  
+214. case '%':  
+215.     try{temp=cl.number%temp;}  
+216.     catch(ArithmeticException excp)  
+217.         {cl.displayLabel.setText("Divide by 0."); return;}  
+218.     break;  
+219. case '/':  
+220.     try{temp=cl.number/temp;}  
+221.         catch(ArithmeticException excp)  
+222.                 {cl.displayLabel.setText("Divide by 0."); return;}  
+223.     break;  
+224. }//switch  
+225.   
+226. cl.displayLabel.setText(MyCalculator.getFormattedText(temp));  
+227. //cl.number=temp;  
+228. }//actionPerformed  
+229. }//class  
+230.   
+231. /****************************************/  
+232.   
+233. class MyMemoryButton extends Button implements ActionListener  
+234. {  
+235. MyCalculator cl;  
+236.   
+237. /////////////////////////////////  
+238. MyMemoryButton(int x,int y, int width,int height,String cap, MyCalculator clc)  
+239. {  
+240. super(cap);  
+241. setBounds(x,y,width,height);  
+242. this.cl=clc;  
+243. this.cl.add(this);  
+244. addActionListener(this);  
+245. }  
+246. ////////////////////////////////////////////////  
+247. public void actionPerformed(ActionEvent ev)  
+248. {  
+249. char memop=((MyMemoryButton)ev.getSource()).getLabel().charAt(1);  
+250.   
+251. cl.setClear=true;  
+252. double temp=Double.parseDouble(cl.displayLabel.getText());  
+253.   
+254. switch(memop)  
+255. {  
+256. case 'C':   
+257.     cl.memLabel.setText(" ");cl.memValue=0.0;break;  
+258. case 'R':   
+259.     cl.displayLabel.setText(MyCalculator.getFormattedText(cl.memValue));break;  
+260. case 'S':  
+261.     cl.memValue=0.0;  
+262. case '+':   
+263.     cl.memValue+=Double.parseDouble(cl.displayLabel.getText());  
+264.     if(cl.displayLabel.getText().equals("0") || cl.displayLabel.getText().equals("0.0")  )  
+265.         cl.memLabel.setText(" ");  
+266.     else   
+267.         cl.memLabel.setText("M");     
+268.     break;  
+269. }//switch  
+270. }//actionPerformed  
+271. }//class  
+272.   
+273. /*****************************************/  
+274.   
+275. class MySpecialButton extends Button implements ActionListener  
+276. {  
+277. MyCalculator cl;  
+278.   
+279. MySpecialButton(int x,int y, int width,int height,String cap, MyCalculator clc)  
+280. {  
+281. super(cap);  
+282. setBounds(x,y,width,height);  
+283. this.cl=clc;  
+284. this.cl.add(this);  
+285. addActionListener(this);  
+286. }  
+287. //////////////////////  
+288. static String backSpace(String s)  
+289. {  
+290. String Res="";  
+291. for(int i=0; i<s.length()-1; i++) Res+=s.charAt(i);  
+292. return Res;  
+293. }  
+294.   
+295. //////////////////////////////////////////////////////////  
+296. public void actionPerformed(ActionEvent ev)  
+297. {  
+298. String opText=((MySpecialButton)ev.getSource()).getLabel();  
+299. //check for backspace button  
+300. if(opText.equals("Backspc"))  
+301. {  
+302. String tempText=backSpace(cl.displayLabel.getText());  
+303. if(tempText.equals(""))   
+304.     cl.displayLabel.setText("0");  
+305. else   
+306.     cl.displayLabel.setText(tempText);  
+307. return;  
+308. }  
+309. //check for "C" button i.e. Reset  
+310. if(opText.equals("C"))   
+311. {  
+312. cl.number=0.0; cl.op=' '; cl.memValue=0.0;  
+313. cl.memLabel.setText(" ");  
+314. }  
+315.   
+316. //it must be CE button pressed  
+317. cl.displayLabel.setText("0");cl.setClear=true;  
+318. }//actionPerformed  
+319. }//class  
+"`
 
 
 // code.js
@@ -605,7 +328,7 @@ let flowchartConfig1 = "very simple";
 let complexity1 = "매우 간단";
 let language1 = "한국어";
 
-let promptCustom1 = `아래 코드 "${curCode}"의 mermaid code를 아래 조건에 맞게 작성해줘
+let promptCustom1 = `아래 코드 "${currentCode}"의 mermaid code를 아래 조건에 맞게 작성해줘
 조건
  : "${complexity1}"
 언어 : "${language1}"
@@ -620,7 +343,7 @@ let flowchartConfig2 = "very simple";
 let complexity2 = "매우 간단";
 let language2 = "한국어";
 
-let promptCustom2 = `함수별로 코드 ${curCode} 분석결과를 아래 출력양식과 조건에 맞춰서, 분석내용 작성해줄래?
+let promptCustom2 = `함수별로 코드 ${currentCode} 분석결과를 아래 출력양식과 조건에 맞춰서, 분석내용 작성해줄래?
 
 조건 : ${complexity2}
 언어 : ${language2}
@@ -639,7 +362,7 @@ let flowchartConfig3 = "very simple";
 let complexity3 = "매우 간단";
 let language3 = "한국어";
 
-let promptCustom3 = `아래 코드${curCode}에 대해서 최대한 상세하게 많은 줄에 주석을 달아줘
+let promptCustom3 = `아래 코드${currentCode}에 대해서 최대한 상세하게 많은 줄에 주석을 달아줘
 
 조건 : ${complexity3}
 언어 : ${language3}`;
@@ -654,7 +377,7 @@ let flowchartConfig4 = "very simple";
 let complexity4 = "매우 간단";
 let language4 = "한국어";
 
-let promptCustom4 = `아래 코드${curCode}를 함수별로 플로우차트 그리기 위해서 flowchart td를 mermaid code로 간단하게 작성해줘
+let promptCustom4 = `아래 코드${currentCode}를 함수별로 플로우차트 그리기 위해서 flowchart td를 mermaid code로 간단하게 작성해줘
 
 조건 : ${complexity4}
 언어 : ${language4}
@@ -671,7 +394,7 @@ let flowchartConfig5 = "very simple";
 let complexity5 = "매우 간단";
 let language5 = "한국어";
 
-let promptCustom5 = `아래 코드${curCode}를 읽고 함수별로 텍스트로 된 pseudo code를 아래 출력 형식에 맞춰서 생성부탁해
+let promptCustom5 = `아래 코드${currentCode}를 읽고 함수별로 텍스트로 된 pseudo code를 아래 출력 형식에 맞춰서 생성부탁해
 
 조건 : ${complexity5}
 언어 : ${language5}
