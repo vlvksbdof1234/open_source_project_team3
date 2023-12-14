@@ -9,7 +9,7 @@ function Navbar() {
         <div className="imgDiv">
           <img alt="mainlogo" src={logo} />
         </div>
-        <i>AI code helper</i>
+        <i>COCOBOT</i>
       </div>
     </div>
   );
