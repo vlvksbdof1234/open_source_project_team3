@@ -5,4 +5,11 @@
     width: 100%;
 } 
 
+.readOnlyEditor{  
+    font-family: '"Fira code", "Fira Mono", monospace';
+    font-size: 12;
+    width: 100%;
+    white-space: pre-wrap;
+    margin-bottom: 10px;
+} 
     

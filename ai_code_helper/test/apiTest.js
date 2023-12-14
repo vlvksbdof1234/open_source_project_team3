@@ -26,5 +26,8 @@ const chatCompletionsCreate = async chatPrompt =>
     { role: "user", content: chatPrompt }, ], model: model, max_tokens: 1024})
     // 결과를 res (response) 에 저장
     console.log("chatCompletionsCreate", res.choices[0].message.content);
+    return res.choices[0].message.content;
 }
 chatCompletionsCreate(promptCustom1);
+
+// .choices[0].message.content
