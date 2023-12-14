@@ -36,7 +36,7 @@ export const createCodeInspection = (code, setCodeInspect, setCodeInspectIsLoadi
     출력 방법은 아래 json.parse 함수가 가능하도록 \n는 사용하지 않고 json 형식에 꼭 맞춰서해줘
     
     [context : {function_name, "main_code_by_function", code_analysis_by_function }]`;
-
+    console.log(promptCustom);
     setCodeInspect("");
     setCodeInspectIsLoading(true);  
     chatCompletionsCreate(promptCustom).then((res)=>{

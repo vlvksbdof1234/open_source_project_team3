@@ -39,13 +39,18 @@ export const CodeInspectDiv = ({codeInspect,isCodeInspectLoading,setCodeInspectI
 
   return (
     <div id="codeInspect" className='codeInspect'>
-      {codeInspectJson ? (
-      <>
-      {codeInspectJson.map(p =>{
-          
-          return <><ReadOnlyEditor currentCode={p.main_code_by_function}></ReadOnlyEditor><h3>함수 명 : ${p.function_name} + 코드별 분석 : ${p.code_analysis_by_function}</h3></>;
-      })}
-      </>):""}
+{
+  codeInspectJson && Array.isArray(codeInspectJson) && codeInspectJson.length > 0 ? (
+    <>
+      {codeInspectJson.map((p, index) => (
+        <div key={index}>
+          <ReadOnlyEditor currentCode={p.main_code_by_function} />
+          <h3>함수 명 : {p.function_name} 코드별 분석 : {p.code_analysis_by_function}</h3>
+        </div>
+      ))}
+    </>
+  ) : null
+}
       {isError ? (<h1>ERROR</h1>):""}
       {isCodeInspectLoading ? (<h1>LOADING</h1>):""}
     </div>
