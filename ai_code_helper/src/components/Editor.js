@@ -10,12 +10,12 @@ import './../styles/prism-gruvbox-dark.css'
 
 
 
-export default function Editor ({curCode, setcurCode}) {
+export default function Editor ({curCode, setCurCode}) {
   return (
     <SimpleEditor
       className={"editorbox"}
       value={curCode}
-      onValueChange={curCode => setcurCode(curCode)}
+      onValueChange={curCode => setCurCode(curCode)}
       
       highlight={curCode => highlight(curCode, languages.js)}
       padding={10}

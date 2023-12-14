@@ -6,7 +6,7 @@ import "./styles/App.css";
 
 function App() {
   const [curMenu, setCurMenu] = useState("code-inspection");
-  const [curCode, setcurCode] = useState(`// The UnionFind (or Disjoint Set) class is used to keep track of elements partitioned into disjoint subsets.
+  const [curCode, setCurCode] = useState(`// The UnionFind (or Disjoint Set) class is used to keep track of elements partitioned into disjoint subsets.
   class UnionFind {
       constructor(size) {
           // The parent array contains the representative element (or the root) for each subset.
@@ -77,20 +77,21 @@ function App() {
   `);
 
 
-  const [currentDiff, setCurrentDiff] = useState(
-    `git bash에서 git diff 명령어를 입력해서 결과를 받아오세요!`
-  );
+  const [currentDiff, setCurrentDiff] = useState(`git bash에서 아래 명령어롤 명령어를 입력해서 결과를 받아오세요!\n\ngit --no-pager diff`);
+  const [codeInspect, setCodeInspect] = useState(``);
+  const [isCodeInspectLoading, setCodeInspectIsLoading] = useState(false);
   
   return (
     <div className="App">
       <Navbar />
       <div className="body">
-        <CodeSpace
-          className="topComponent"
+          <CodeSpace className="topComponent"
           curCode={curCode}
-          setcurCode={setcurCode}
+          setCurCode={setCurCode}
           currentDiff={currentDiff}
           setCurrentDiff={setCurrentDiff}
+          setCodeInspect={setCodeInspect}
+          setCodeInspectIsLoading={setCodeInspectIsLoading}
         ></CodeSpace>
         <MenuContainer
           className="topComponent"

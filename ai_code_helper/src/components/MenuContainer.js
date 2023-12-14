@@ -4,7 +4,9 @@ import CodeInspectDiv from './CodeInspectDiv.js';
 import PseudoCodeDiv  from './PseudoCodeDiv.js';
 import FlowChartDiv from './FlowChartDiv.js'
 
-function MenuContainer({ curMenu, setCurMenu, curCode }) {
+
+
+function MenuContainer({ curMenu, setCurMenu, curCode,codeInspect,setCodeInspect,isCodeInspectLoading,setCodeInspectIsLoading }) {
 
   return (
     <div className="MenuContainer">

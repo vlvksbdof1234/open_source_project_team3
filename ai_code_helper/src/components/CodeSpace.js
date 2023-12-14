@@ -6,7 +6,7 @@ import Modal from "../components/Modal"
 import { createCodeInspection } from "../apiService";
 
 
-function CodeSpace({curCode, setcurCode, currentDiff, setCurrentDiff}) {
+function CodeSpace({ curCode, setCurCode, currentDiff, setCurrentDiff, setCodeInspect, setCodeInspectIsLoading}) {
 
   const [value, updateValue] = useState("");
   const [jsvalue, updatejsValue] = useState("");
@@ -29,7 +29,7 @@ function CodeSpace({curCode, setcurCode, currentDiff, setCurrentDiff}) {
   }
 
   const callGpt = () => {
-    createCodeInspection(currentCode,setCodeInspect,setCodeInspectIsLoading);
+    createCodeInspection(curCode,setCurCode,setCodeInspectIsLoading);
   }
 
   useEffect(() => {
@@ -45,7 +45,7 @@ function CodeSpace({curCode, setcurCode, currentDiff, setCurrentDiff}) {
     <div className="codeSpace">
       <div className="playground">
         <div className={`editor mr-0 editorbox`}>
-          <Editor curCode={curCode} setcurCode={setcurCode}></Editor>
+          <Editor curCode={curCode} setCurCode={setCurCode}></Editor>
         </div>
       </div>
       <div className="footer">
@@ -62,7 +62,7 @@ function CodeSpace({curCode, setcurCode, currentDiff, setCurrentDiff}) {
       <Modal open={modalOpen} close={closeModal} header="Git Diff">
       <div className="playground">
         <div className={`editor mr-0 editorbox`}>
-        <DiffEditor curCode={currentDiff} setcurCode={setCurrentDiff}></DiffEditor>
+        <DiffEditor curCode={currentDiff} setCurCode={setCurrentDiff}></DiffEditor>
         </div>
         </div>
       </Modal>
