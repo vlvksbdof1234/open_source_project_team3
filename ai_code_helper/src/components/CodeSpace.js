@@ -7,7 +7,6 @@ import { createCodeInspection } from "../apiService";
 
 
 function CodeSpace({ currentCode, setCurrentCode, currentDiff, setCurrentDiff, setCodeInspect, setCodeInspectIsLoading}) {
-
   const [value, updateValue] = useState("");
   const [jsvalue, updatejsValue] = useState("");
   const [cssvalue, updatecssValue] = useState("");
