@@ -5,7 +5,7 @@ import "./../styles/CodeSpace.css";
 import Modal from "../components/Modal"
 
 
-function CodeSpace({curCode, setcurCode, currentDiff, setCurrentDiff}) {
+function CodeSpace({currentCode, setCurrentCode, currentDiff, setCurrentDiff}) {
 
   const [value, updateValue] = useState("");
   const [jsvalue, updatejsValue] = useState("");
@@ -54,7 +54,7 @@ function CodeSpace({curCode, setcurCode, currentDiff, setCurrentDiff}) {
     <div className="codeSpace">
       <div className="playground">
         <div className={`editor mr-0 editorbox`}>
-          <Editor curCode={curCode} setcurCode={setcurCode}></Editor>
+          <Editor currentCode={currentCode} setCurrentCode={setCurrentCode}></Editor>
         </div>
       </div>
       <div className="footer">
@@ -78,7 +78,7 @@ function CodeSpace({curCode, setcurCode, currentDiff, setCurrentDiff}) {
       <Modal open={modalOpen} close={closeModal} header="Modal heading">
       <div className="playground">
         <div className={`editor mr-0 editorbox`}>
-        <DiffEditor curCode={currentDiff} setcurCode={setCurrentDiff}></DiffEditor>
+        <DiffEditor currentCode={currentDiff} setCurrentCode={setCurrentDiff}></DiffEditor>
         </div>
         </div>
       </Modal>

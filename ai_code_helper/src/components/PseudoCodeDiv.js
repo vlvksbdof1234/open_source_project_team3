@@ -4,7 +4,7 @@ import { createPseudoCode } from "../apiService";
 import logo from "../image/settingLogo.png";
 import LoadingSpinner from "./LoadingSpinner";
 
-export const PseudoCodeDiv = ({ curCode }) => {
+export const PseudoCodeDiv = ({ currentCode }) => {
   const [pseudoCode, setPseudoCode] = useState("");
   const [query, setQuery] = useState("");
   const [tempDetailLevel, setTempDetailLevel] = useState("basic");
@@ -37,7 +37,7 @@ export const PseudoCodeDiv = ({ curCode }) => {
     setIsLoading(true);
     setVisible(false);
     await createPseudoCode(
-      curCode,
+      currentCode,
       query,
       detailLevel,
       language,

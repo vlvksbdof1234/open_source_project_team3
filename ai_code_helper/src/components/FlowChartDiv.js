@@ -5,7 +5,7 @@ import logo from "../image/settingLogo.png";
 import { createFlowChartMermaid } from "../apiService";
 import LoadingSpinner from "./LoadingSpinner";
 
-export const FlowChartDiv = ({ curCode }) => {
+export const FlowChartDiv = ({ currentCode }) => {
   const initialMermaidCode = ``;
   const [mermaidVisible, setMermaidVisible] = useState("hidden");
   const [mermaidCode, setMermaidCode] = useState(initialMermaidCode);
@@ -84,7 +84,7 @@ export const FlowChartDiv = ({ curCode }) => {
 
   // useEffect(() => {
   //   console.log(
-  //     `복잡도: ${detailLevel} 언어: ${language} 생성 대상: ${query} 코드: ${curCode}`
+  //     `복잡도: ${detailLevel} 언어: ${language} 생성 대상: ${query} 코드: ${currentCode}`
   //   );
   // });
 
@@ -102,7 +102,7 @@ export const FlowChartDiv = ({ curCode }) => {
     setMermaidVisible("hidden");
     setGenerate(false);
     await createFlowChartMermaid(
-      curCode,
+      currentCode,
       query,
       detailLevel,
       language,

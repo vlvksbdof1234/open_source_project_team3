@@ -6,7 +6,7 @@ import "./styles/App.css";
 
 function App() {
   const [curMenu, setCurMenu] = useState("code-inspection");
-  const [curCode, setcurCode] = useState(`// The UnionFind (or Disjoint Set) class is used to keep track of elements partitioned into disjoint subsets.
+  const [currentCode, setCurrentCode] = useState(`// The UnionFind (or Disjoint Set) class is used to keep track of elements partitioned into disjoint subsets.
   class UnionFind {
       constructor(size) {
           // The parent array contains the representative element (or the root) for each subset.
@@ -87,15 +87,15 @@ function App() {
       <div className="body">
         <CodeSpace
           className="topComponent"
-          curCode={curCode}
-          setcurCode={setcurCode}
+          currentCode={currentCode}
+          setCurrentCode={setCurrentCode}
           currentDiff={currentDiff}
           setCurrentDiff={setCurrentDiff}
         ></CodeSpace>
         <MenuContainer
           className="topComponent"
           curMenu={curMenu}
-          curCode={curCode}
+          currentCode={currentCode}
           setCurMenu={setCurMenu}
         />
       </div>
