@@ -80,7 +80,7 @@ function App() {
   const [currentDiff, setCurrentDiff] = useState(
     `git bash에서 git diff 명령어를 입력해서 결과를 받아오세요!`
   );
-
+  
   return (
     <div className="App">
       <Navbar />
@@ -97,6 +97,10 @@ function App() {
           curMenu={curMenu}
           curCode={curCode}
           setCurMenu={setCurMenu}
+          codeInspect={codeInspect}
+          setCodeInspect={setCodeInspect}
+          isCodeInspectLoading={isCodeInspectLoading}
+          setCodeInspectIsLoading={setCodeInspectIsLoading}
         />
       </div>
     </div>

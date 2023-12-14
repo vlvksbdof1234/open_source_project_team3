@@ -1,3 +1,4 @@
+
 // 설정 값을 가져와서
 import OpenAI from "openai";
 // chatgpt api를 사용한다.

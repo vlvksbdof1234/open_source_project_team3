@@ -12,7 +12,11 @@ function MenuContainer({ curMenu, setCurMenu, curCode }) {
         curMenu={curMenu}
         operation="code-inspection"
         setCurMenu={setCurMenu}
-      ><CodeInspectDiv/></MenuDiv>
+      ><CodeInspectDiv
+       codeInspect={codeInspect}
+       isCodeInspectLoading={isCodeInspectLoading}
+       setCodeInspectIsLoading={setCodeInspectIsLoading}
+        /></MenuDiv>
       <MenuDiv
         curMenu={curMenu}
         operation="flow-chart"
