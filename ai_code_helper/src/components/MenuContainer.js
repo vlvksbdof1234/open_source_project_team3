@@ -1,10 +1,10 @@
 import "../styles/MenuContainer.css";
-import MenuDiv from "./MenuDiv.js";
-import CodeInspectDiv from './CodeInspectDiv.js';
-import PseudoCodeDiv  from './PseudoCodeDiv.js';
-import FlowChartDiv from './FlowChartDiv.js'
+import MenuDiv from "./MenuDiv";
+import CodeInspectDiv from './CodeInspectDiv';
+import PseudoCodeDiv  from './PseudoCodeDiv';
+import FlowChartDiv from './FlowChartDiv'
 
-function MenuContainer({ curMenu, setCurMenu, curCode }) {
+function MenuContainer({ curMenu, setCurMenu,codeInspect,isCodeInspectLoading,setCodeInspectIsLoading }) {
 
   return (
     <div className="MenuContainer">
@@ -21,12 +21,12 @@ function MenuContainer({ curMenu, setCurMenu, curCode }) {
         curMenu={curMenu}
         operation="flow-chart"
         setCurMenu={setCurMenu}
-      ><FlowChartDiv curCode={curCode}/></MenuDiv>
+      ><FlowChartDiv/></MenuDiv>
       <MenuDiv
         curMenu={curMenu}
         operation="pseudo-code"
         setCurMenu={setCurMenu}
-      ><PseudoCodeDiv curCode={curCode}/></MenuDiv>
+      ><PseudoCodeDiv/></MenuDiv>
     </div>
   );
 }

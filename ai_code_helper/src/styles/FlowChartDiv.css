@@ -44,10 +44,6 @@
   display: flex;
 }
 
-.generate-button button {
-  cursor:pointer;
-}
-
 h1 {
   color: white;
   font-weight: 400;
@@ -95,19 +91,14 @@ h1 {
 }
 
 .mermaid-editor {
-  width:710px;
-  padding: 20px 20px;
+  padding: 10px 20px;
   background-color: #f7f7f7;
 }
 
 .mermaid-editor textarea {
-  width: 700px;
-  font-size: 1rem;
-  margin-left:0;
-  margin-top:0;
+  width: 500px;
   /* 에디터 너비 조정 */
-  height: 400px;
-  margin-bottom:20px;
+  height: 350px;
   /* 에디터 높이 조정 */
   border: none;
   overflow: scroll;
@@ -126,7 +117,6 @@ h1 {
 
 .editButton {
   border: none;
-  width:200px;
   height: 40px;
   font-size: 1.2rem;
   margin-right: 10px;
@@ -194,11 +184,4 @@ h1 {
 
 .settings-buttons button {
   margin-right: 10px;
-}
-
-.hidden {
-  display: none;
-}
-.visible {
-  display: block;
 }
