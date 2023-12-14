@@ -6,7 +6,7 @@ import Modal from "../components/Modal"
 import { createCodeInspection } from "../apiService";
 
 
-function CodeSpace({ currentCode, setCurrentCode, currentDiff, setCurrentDiff, setCodeInspect, setCodeInspectIsLoading}) {
+function CodeSpace({curCode, setcurCode, currentDiff, setCurrentDiff}) {
 
   const [value, updateValue] = useState("");
   const [jsvalue, updatejsValue] = useState("");
@@ -45,7 +45,7 @@ function CodeSpace({ currentCode, setCurrentCode, currentDiff, setCurrentDiff, s
     <div className="codeSpace">
       <div className="playground">
         <div className={`editor mr-0 editorbox`}>
-          <Editor currentCode={currentCode} setCurrentCode={setCurrentCode}></Editor>
+          <Editor curCode={curCode} setcurCode={setcurCode}></Editor>
         </div>
       </div>
       <div className="footer">
@@ -62,7 +62,7 @@ function CodeSpace({ currentCode, setCurrentCode, currentDiff, setCurrentDiff, s
       <Modal open={modalOpen} close={closeModal} header="Git Diff">
       <div className="playground">
         <div className={`editor mr-0 editorbox`}>
-        <DiffEditor currentCode={currentDiff} setCurrentCode={setCurrentDiff}></DiffEditor>
+        <DiffEditor curCode={currentDiff} setcurCode={setCurrentDiff}></DiffEditor>
         </div>
         </div>
       </Modal>
