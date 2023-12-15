@@ -1,6 +1,6 @@
 // import { config } from "dotenv";
 // 설정 값을 가져와서
-import OpenAI from "openai"
+import OpenAI from "openai";
 // config()
 // chatgpt api를 사용한다.
 const apiKey = process.env.REACT_APP_API_KEY;
@@ -10,25 +10,32 @@ console.log(apiKey);
 const model = "gpt-3.5-turbo";
 // 사용 하는 모델 지정
 // key 잘 가져왔는지 확인
-const open_ai = new OpenAI({apiKey,dangerouslyAllowBrowser:true});
+const open_ai = new OpenAI({ apiKey, dangerouslyAllowBrowser: true });
 // // lib 활용하는 객체 선언
 
-
-const chatCompletionsCreate = async chatPrompt => 
-// await 비동기로 API를 호출해서 gpt lib로 서버에 요청 보내서 response를 받아오는 내용
-{ const res = await open_ai.chat.completions.create({
-    messages: [ 
+const chatCompletionsCreate = async (chatPrompt) =>
+  // await 비동기로 API를 호출해서 gpt lib로 서버에 요청 보내서 response를 받아오는 내용
+  {
+    const res = await open_ai.chat.completions.create({
+      messages: [
         { role: "system", content: "You are good at programmer." },
-        { role: "user", content: chatPrompt }, ], model: model, max_tokens: 2048})
-        return res.choices[0].message.content;
-}
+        { role: "user", content: chatPrompt },
+      ],
+      model: model,
+      max_tokens: 2048,
+    });
+    return res.choices[0].message.content;
+  };
 
+export const createCodeInspection = (
+  code,
+  setCodeInspect,
+  setCodeInspectIsLoading
+) => {
+  let complexity = "매우 간단";
+  let language = "한국어";
 
-export const createCodeInspection = (code, setCodeInspect, setCodeInspectIsLoading) => {
-    let complexity = "매우 간단";
-    let language = "한국어";
-
-    let promptCustom = `함수별로 코드 """${code}""" 분석결과를 아래 출력양식과 조건에 맞춰서, 분석내용 작성해줄래? 
+  let promptCustom = `함수별로 코드 """${code}""" 분석결과를 아래 출력양식과 조건에 맞춰서, 분석내용 작성해줄래? 
     
     조건 : ${complexity}
     언어 : ${language}
@@ -36,16 +43,15 @@ export const createCodeInspection = (code, setCodeInspect, setCodeInspectIsLoadi
     출력 방법은 아래 json.parse 함수가 가능하도록 \n는 사용하지 않고 json 형식에 꼭 맞춰서해줘
     
     [context : {function_name, "main_code_by_function", code_analysis_by_function }]`;
-    console.log(promptCustom);
-    setCodeInspect("");
-    setCodeInspectIsLoading(true);  
-    chatCompletionsCreate(promptCustom).then((res)=>{
-        res=res.replace(/\n/g, "").replace("\n", '\\n').replace("\t", "\\t");
-        setCodeInspect(res);   
-    });
-}
+  console.log(promptCustom);
+  setCodeInspect("");
+  setCodeInspectIsLoading(true);
+  chatCompletionsCreate(promptCustom).then((res) => {
+    res = res.replace(/\n/g, "").replace("\n", "\\n").replace("\t", "\\t");
+    setCodeInspect(res);
+  });
+};
 // 설정 값을 가져와서
-
 
 export const createFlowChartMermaid = async (
   code,
@@ -84,6 +90,27 @@ export const createFlowChartMermaid = async (
       .replaceAll("```", "")
       .replaceAll("mermaid", "")
   );
+};
+
+export const createPR = async (code, currentDiff, setCurPullResult) => {
+  let prompt = `
+    ${code}는 현재 코드고
+    ${currentDiff} 는 git diff의 결과야
+
+    이를 바탕으로 pull request에 넣을 메세지를 완성해줘. 다른 사람들이 메세지를 보고 나의 작업을 이해할 수 있게 
+    (중요) 메세지에 해당하는 내용만 답변으로 줘. 그 외에는 아무런 대답하지말고
+    너는 웹 애플리케이션의 일부고
+    이 내용 그대로 pr에 들어갈거야
+  `;
+
+  const res = await open_ai.chat.completions.create({
+    messages: [
+      { role: "system", content: "You Obey my rule as a expert in code" },
+      { role: "user", content: prompt },
+    ],
+    model: model,
+  });
+  setCurPullResult(res.choices[0]["message"]["content"]);
 };
 
 export const createPseudoCode = async (
@@ -134,7 +161,6 @@ export const createPseudoCode = async (
   ========================
   Don't include something like "Note! ~~~" Only give me the PSEUDO CODE!!
   `;
-
 
   const res = await open_ai.chat.completions.create({
     messages: [

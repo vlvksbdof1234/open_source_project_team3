@@ -6,8 +6,9 @@ import "./styles/App.css";
 
 function App() {
   const [curMenu, setCurMenu] = useState("code-inspection");
-
-  const [currentDiff, setCurrentDiff] = useState(`diff --git a/ai_code_helper/src/App.js b/ai_code_helper/src/App.js
+  const [curPullResult, setCurPullResult] = useState("");
+  const [currentDiff, setCurrentDiff] =
+    useState(`diff --git a/ai_code_helper/src/App.js b/ai_code_helper/src/App.js
   index 857f37e..eb73829 100644
   --- a/ai_code_helper/src/App.js
   +++ b/ai_code_helper/src/App.js
@@ -70,18 +71,19 @@ function App() {
   
   `);
 
-
   return (
     <div className="App">
       <Navbar />
       <div className="body">
-        <CodeSpace className="topComponent"
-        currentCode={currentCode}
-        setCurrentCode={setCurrentCode}
-        currentDiff={currentDiff}
-        setCurrentDiff={setCurrentDiff}
-        setCodeInspect={setCodeInspect}
-        setCodeInspectIsLoading={setCodeInspectIsLoading}
+        <CodeSpace
+          className="topComponent"
+          currentCode={currentCode}
+          setCurrentCode={setCurrentCode}
+          currentDiff={currentDiff}
+          setCurrentDiff={setCurrentDiff}
+          setCodeInspect={setCodeInspect}
+          setCodeInspectIsLoading={setCodeInspectIsLoading}
+          setCurPullResult={setCurPullResult}
         ></CodeSpace>
         <MenuContainer
           className="topComponent"
@@ -90,9 +92,11 @@ function App() {
           setCurMenu={setCurMenu}
           codeInspect={codeInspect}
           currentDiff={currentDiff}
+          curPullResult={curPullResult}
           setCodeInspect={setCodeInspect}
           isCodeInspectLoading={isCodeInspectLoading}
           setCodeInspectIsLoading={setCodeInspectIsLoading}
+          setCurPullResult={setCurPullResult}
         />
       </div>
     </div>

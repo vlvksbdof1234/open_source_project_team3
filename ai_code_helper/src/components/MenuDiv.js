@@ -4,7 +4,7 @@ function MenuDiv({ curMenu, operation, setCurMenu, children }) {
   // active 클래스 추가 로직
   const isActive = curMenu === operation;
 
-  const labelName = {"code-inspection": "Code Inspection", "flow-chart":"Flow Chart", "pseudo-code": "Pseudo Code"};
+  const labelName = {"code-inspection": "Code Inspection", "flow-chart":"Flow Chart", "pseudo-code": "Pseudo Code", "pull-request" :"Pull Request Message"};
   const curLabel = labelName[operation];
   
   return (
