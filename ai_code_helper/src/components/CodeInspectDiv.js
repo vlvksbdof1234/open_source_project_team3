@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ReadOnlyEditor from "./ReadOnlyEditor";
 // import JsxParser from 'react-jsx-parser';
 import "./../styles/CodeSpaceInspect.css";
-
+import LoadingSpinner from "./LoadingSpinner";
 
 
 export const CodeInspectDiv = ({codeInspect,isCodeInspectLoading,setCodeInspectIsLoading}) => {
@@ -14,7 +14,7 @@ export const CodeInspectDiv = ({codeInspect,isCodeInspectLoading,setCodeInspectI
     if(codeInspect) {
       try{
         console.log(JSON.parse(codeInspect));
-        setIsError(false);
+        // setIsError(false);
         setCodeInspectJson(JSON.parse(codeInspect).context);
         setCodeInspectIsLoading(false);
       }
@@ -52,7 +52,7 @@ export const CodeInspectDiv = ({codeInspect,isCodeInspectLoading,setCodeInspectI
   ) : null
 }
       {isError ? (<h1>ERROR</h1>):""}
-      {isCodeInspectLoading ? (<h1>LOADING</h1>):""}
+      {isCodeInspectLoading ? (<LoadingSpinner></LoadingSpinner>):""}
     </div>
   )
 }

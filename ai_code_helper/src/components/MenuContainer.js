@@ -4,7 +4,7 @@ import CodeInspectDiv from './CodeInspectDiv.js';
 import PseudoCodeDiv  from './PseudoCodeDiv.js';
 import FlowChartDiv from './FlowChartDiv.js'
 
-function MenuContainer({ currentCode, curMenu, setCurMenu,codeInspect,isCodeInspectLoading,setCodeInspectIsLoading }) {
+function MenuContainer({ currentCode, curMenu, setCurMenu,codeInspect,isCodeInspectLoading,setCodeInspectIsLoading,currentDiff }) {
 
   return (
     <div className="MenuContainer">
@@ -16,6 +16,7 @@ function MenuContainer({ currentCode, curMenu, setCurMenu,codeInspect,isCodeInsp
        codeInspect={codeInspect}
        isCodeInspectLoading={isCodeInspectLoading}
        setCodeInspectIsLoading={setCodeInspectIsLoading}
+       currentDiff={currentDiff}
         /></MenuDiv>
       <MenuDiv
         curMenu={curMenu}
