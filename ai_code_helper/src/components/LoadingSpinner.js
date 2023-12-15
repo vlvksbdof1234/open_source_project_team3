@@ -10,6 +10,7 @@ const LoadingSpinner = (isLoading) => {
           width={5}
           radius={2}
           margin={2}
+          
         />
     </div>
   );
